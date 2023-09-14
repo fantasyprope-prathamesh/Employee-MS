@@ -1,0 +1,15 @@
+"127.0.0.1" is an IP address used to refer to the loopback interface of a network device. In the context of networking, a loopback interface is a virtual network interface that your computer uses to communicate with itself. This means that any data sent to the loopback address stays within your own computer and doesn't actually travel over the network.
+
+When you use "127.0.0.1" as the hostname or IP address, you're instructing your application to bind to the loopback interface of your local machine. This is often used for development and testing purposes, as it allows you to run a server that can be accessed only from your own computer.
+
+The term "localhost" is a human-readable alias for the loopback address "127.0.0.1". It's a more user-friendly way to refer to your own machine's loopback interface. Instead of typing the IP address, you can use "localhost" in URLs and configurations to point to your local machine. Both "127.0.0.1" and "localhost" are typically interchangeable when referring to the loopback interface.
+
+In the code you provided:
+
+javascript
+Copy code
+const hostname = '127.0.0.1';
+const port = 3000;
+You're configuring the server to listen on the loopback interface at IP address "127.0.0.1" and port 3000. This means the server will only be accessible from your own computer. It's a common setup for local development when you're testing your application before deploying it to a production environment.
+
+In many cases, you'll see developers using "localhost" instead of "127.0.0.1" because it's more intuitive and easier to remember. Both notations essentially achieve the same thing – binding the server to your computer's loopback interface for local testing and development.

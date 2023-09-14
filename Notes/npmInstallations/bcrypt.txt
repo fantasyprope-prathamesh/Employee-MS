@@ -1,0 +1,17 @@
+what is bcrypt
+ChatGPT
+Bcrypt is a password-hashing function designed to securely store passwords and protect them from being easily compromised in the event of a data breach. It is widely used in various applications and systems to hash and verify passwords. The term "bcrypt" is derived from the combination of "Blowfish" and "crypt," which are the encryption algorithm and Unix password hashing function, respectively, upon which bcrypt is based.
+
+Bcrypt uses a technique called key stretching or key expansion, which makes it computationally expensive and time-consuming to compute the hash. This feature is crucial because it slows down brute-force attacks, making it much harder for attackers to crack passwords using common methods.
+
+The algorithm involves the following steps:
+
+Salt generation: A random salt value is generated for each password. The salt is then combined with the password before hashing, ensuring that even if two users have the same password, their hash values will be different due to the unique salt.
+
+Key expansion: Bcrypt uses the Blowfish encryption algorithm to expand the key (password + salt) into a much longer key. This process makes brute-force attacks more time-consuming.
+
+Multiple iterations: Bcrypt applies multiple rounds of the key expansion process, further increasing the computational cost of hashing.
+
+The result of the process is a fixed-length hash that includes the salt and number of iterations used. When a user attempts to log in, their provided password is hashed using the same salt and number of iterations, and then it's compared to the stored hash. If the two hashes match, the password is considered valid, granting access.
+
+Bcrypt is widely preferred over older and weaker hash functions like MD5 and SHA-1, which are now considered insecure due to advances in computing power and the ability to conduct faster brute-force attacks. By using bcrypt, applications can significantly enhance the security of user passwords and protect against unauthorized access to sensitive information.

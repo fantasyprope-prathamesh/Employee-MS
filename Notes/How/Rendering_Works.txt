@@ -1,0 +1,37 @@
+you means during initial rendering when jsx renders first time there is no value into the uniqueContinents.
+
+ChatGPT
+Exactly, during the initial rendering of your component, the uniqueContinents state might not have a value yet. This is because the state updates are asynchronous, and React needs some time to process and apply those updates. When your component renders for the first time, it's possible that the uniqueContinents state hasn't been updated with the new values from the useEffect yet.
+
+Here's a step-by-step breakdown of what happens during the initial rendering:
+
+The Home component is initially rendered.
+The uniqueContinents state is initialized to an empty array [].
+The first useEffect runs, where it calculates the unique continents and updates the uniqueContinents state using setUniqueContinents(temp).
+However, this update is asynchronous. React schedules the state update but doesn't immediately apply it.
+The rendering continues, and the JSX code attempts to use the uniqueContinents state to render the buttons.
+Since the uniqueContinents state might not have been updated yet, it could still be an empty array or its previous value.
+To ensure that you use the correct and up-to-date value of uniqueContinents when rendering, you use the second state, states, which is updated in response to changes in uniqueContinents:
+
+javascript
+Copy code
+const [states, setStates] = useState([]);
+
+useEffect(() => {
+  setStates(uniqueContinents);
+}, [uniqueContinents]);
+By doing this, you guarantee that the states state will always have the most recent value of uniqueContinents when rendering, even during the initial render. This prevents any potential issues that could arise from trying to render with a potentially outdated or undefined value of uniqueContinents.
+
+
+
+=============================================================================================
+
+
+
+means during first initial rendering map will not work because states has null array because till uniqueContinents is not updated
+ChatGPT
+Yes, that's correct. During the first initial rendering, the states state might contain an empty array or an outdated value because it takes some time for the useEffect that updates states to run after the useEffect that updates uniqueContinents.
+
+This is why using the states state to render the buttons is important. By setting up the second useEffect to update states whenever uniqueContinents changes, you ensure that you're using the most recent and accurate value of uniqueContinents for rendering. This helps prevent any potential issues that could arise from trying to render with an outdated or undefined value.
+
+In summary, using the states state provides a reliable mechanism to access the updated uniqueContinents value, both during the initial rendering and during subsequent re-renders. It helps ensure that your UI is always consistent and reflects the correct data.

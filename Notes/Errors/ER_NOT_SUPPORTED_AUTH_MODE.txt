@@ -1,0 +1,46 @@
+The error you are encountering is related to the authentication protocol used by the MySQL server. This error occurs when the MySQL server is configured to use an authentication plugin that the Node.js MySQL client (mysql package) does not support.
+
+The most common cause of this issue is that the MySQL server is using the caching_sha2_password authentication plugin, which is the default in MySQL 8.0 and later versions. However, the mysql package you are using might not support this authentication plugin out of the box.
+
+To resolve this issue, you have a few options:
+
+Upgrade MySQL Client Package: You can try upgrading the mysql package to the latest version, as newer versions might have added support for the caching_sha2_password authentication plugin.
+
+css
+Copy code
+npm install mysql@latest
+After updating the package, restart your Node.js application and try connecting again.
+
+Use mysql2 Package: Consider using the mysql2 package instead of the mysql package. The mysql2 package is a more up-to-date and feature-rich alternative to the mysql package. It has better support for modern MySQL authentication methods.
+
+Copy code
+npm install mysql2
+Then, update your code to use mysql2:
+
+javascript
+Copy code
+import express from 'express';
+import mysql from 'mysql2'; // Import 'mysql2' instead of 'mysql'
+
+// ... (rest of the code remains the same)
+
+// creating connection pool
+const pool = mysql.createPool({
+  host: 'localhost',
+  user: 'root',
+  password: 'your_mysql_password_here',
+  database: 'your_database_name_here',
+  connectionLimit: 10, // You can adjust this number based on your requirements
+});
+
+// ... (rest of the code remains the same)
+Change MySQL Authentication Plugin: If you have control over the MySQL server configuration, you can change the authentication plugin used by the MySQL server for the user you are connecting with. For example, you can change it to use the mysql_native_password plugin, which is supported by the mysql package.
+
+sql
+Copy code
+ALTER USER 'your_username'@'your_host' IDENTIFIED WITH mysql_native_password BY 'your_password';
+Replace 'your_username', 'your_host', and 'your_password' with the appropriate values for your user.
+
+After making this change, restart the MySQL server, and then try connecting again.
+
+Using the mysql2 package is generally recommended as it provides better support for modern MySQL features. However, if you choose to stick with the mysql package, make sure you are using the latest version available.

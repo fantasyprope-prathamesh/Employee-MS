@@ -1,0 +1,12 @@
+you means to stop the page reloading after clicking the submit button we use preventDefault
+
+ChatGPT
+Yes, that's correct. The primary purpose of using event.preventDefault() in the onSubmit event handler is to prevent the default form submission behavior, which includes reloading the page or navigating to a new URL specified in the action attribute of the form.
+
+By default, when a user clicks a submit button inside a form or presses Enter while focused on an input field within a form, the browser tries to submit the form to the URL specified in the action attribute. If the action attribute is not specified, the form is submitted to the current URL (i.e., the same page), resulting in a page reload.
+
+When you use event.preventDefault() in the onSubmit event handler, it stops the default behavior, which means the form data will not be submitted to the specified URL or cause a page reload. Instead, you can handle the form submission in the event handler and perform any custom actions you want, such as form data validation, making API calls, updating the state, or showing error messages, without leaving or reloading the page.
+
+Preventing the default behavior with event.preventDefault() is especially useful when you want to handle form submissions asynchronously using JavaScript, for example, when submitting form data via AJAX to the server without a full page reload.
+
+In summary, using event.preventDefault() in the onSubmit event handler allows you to take full control over how form submissions are handled, preventing the default page reload behavior and enabling custom actions to be performed based on the form data before sending it to the server.

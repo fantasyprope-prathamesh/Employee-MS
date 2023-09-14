@@ -1,0 +1,23 @@
+What is nodemoon
+
+I believe there might be a typographical error in your question. The correct term is nodemon, not nodemoon.
+
+nodemon is a popular utility in the Node.js ecosystem used during development to automatically restart the Node.js application whenever changes are detected in the project files. It is especially helpful when working on server-side applications, APIs, or any Node.js project that requires frequent code changes.
+
+Typically, when you run a Node.js application using the node command, you need to manually stop and restart the application each time you make changes to your code. This manual process can be time-consuming and disrupt the development workflow.
+
+nodemon solves this problem by monitoring the files in your project directory. When it detects any changes, it automatically restarts the Node.js application, saving you from the hassle of manually stopping and restarting the server.
+
+To use nodemon, you need to install it globally on your system:
+
+bash
+Copy code
+npm install -g nodemon
+Once installed, you can use nodemon to run your Node.js application:
+
+bash
+Copy code
+nodemon app.js
+Now, whenever you save changes to your code, nodemon will automatically restart the application, providing a smoother and more efficient development experience.
+
+Keep in mind that while nodemon is a handy development tool, it is not typically used in a production environment. In production, you would typically run the Node.js application using the node command or with a process manager like PM2.

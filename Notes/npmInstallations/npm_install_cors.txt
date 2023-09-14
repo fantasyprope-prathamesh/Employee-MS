@@ -1,0 +1,26 @@
+what is cors ?
+
+
+CORS stands for Cross-Origin Resource Sharing. It is a security feature implemented in web browsers that controls how web pages or web applications hosted on one domain can interact with resources (e.g., APIs) hosted on a different domain. CORS is a crucial security mechanism that prevents unauthorized access to resources and helps protect users from potential security threats.
+
+Browsers enforce the same-origin policy by default, which means that web pages from one domain (origin) are not allowed to make direct requests to resources on a different domain. However, there are legitimate use cases where web applications may need to interact with APIs or resources on other domains. CORS provides a mechanism for servers to declare which domains are allowed to access their resources.
+
+Here's how CORS works:
+
+A web page or application hosted on Domain A makes an HTTP request to a resource (e.g., an API) hosted on Domain B.
+
+The server on Domain B receives the request and, before sending the response, includes CORS-related HTTP headers in the response.
+
+The web browser on Domain A checks the CORS headers in the response. If the headers indicate that Domain A is allowed to access the resource, the browser allows the response to be processed. If not, the browser blocks the response, and the web page or application on Domain A cannot access the resource.
+
+CORS is implemented using HTTP headers, primarily the "Access-Control-Allow-Origin" header. This header is set by the server and specifies which domains are allowed to access the resource. For example, if a server wants to allow access from any domain, it can set the header as:
+
+makefile
+Copy code
+Access-Control-Allow-Origin: *
+If a server wants to allow access from specific domains, it can set the header as:
+
+arduino
+Copy code
+Access-Control-Allow-Origin: https://example.com
+CORS is an essential security measure that helps protect sensitive data and resources on the web. It ensures that only authorized clients can access certain resources and helps prevent cross-site request forgery (CSRF) and other security vulnerabilities.

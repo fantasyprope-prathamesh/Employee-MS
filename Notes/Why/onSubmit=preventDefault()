@@ -1,0 +1,19 @@
+event.preventDefault(): In JavaScript, the preventDefault() method is used to prevent the default behavior of an event. In the context of a form submission, the default behavior is to refresh the page or navigate to a new URL specified in the action attribute of the form element.
+
+The handleSubmit function is passed as the onSubmit event handler to the form element here: <form onSubmit={handleSubmit}>. This means that when the form is submitted, the handleSubmit function will be executed.
+
+Inside the handleSubmit function, event.preventDefault() is called as the first action. By doing this, we prevent the default form submission behavior, which means the page won't be refreshed or navigated to a new URL upon form submission.
+
+In this specific code, the form submission is prevented, and no further action is taken inside the handleSubmit function. As a result, when the "Login" button is clicked (which is currently a regular button with type="button" and not a submit button), the form will not be submitted, and the page won't reload. Instead, the form data can be processed further or validated using JavaScript functions or sent to a server using an asynchronous request like AJAX.
+
+If you want to actually submit the form to a server or perform any other actions when the "Login" button is clicked, you should change the button's type to type="submit":
+
+jsx
+Copy code
+<button
+  className="btn btn-dark btn-llg btn-block"
+  type="submit"
+>
+  Login
+</button>
+This change will trigger the form submission, and the handleSubmit function will be called, but remember to handle the form submission logic accordingly. In a real application, you might want to validate the user's input, make API calls, or perform other operations based on the form data before submitting it to the server.

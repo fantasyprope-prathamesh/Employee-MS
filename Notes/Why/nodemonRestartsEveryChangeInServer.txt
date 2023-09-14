@@ -1,0 +1,5 @@
+if any change happen in server then nodemon will restart the server is it right?
+ChatGPT
+Yes, that's correct! Nodemon is a popular tool used during Node.js development to automatically restart the server whenever changes are detected in the server-side code. It is particularly useful during development as it eliminates the need to manually stop and restart the server every time you make changes to your code.
+
+When you run your Node.js application using Nodemon, it monitors the files in your project directory. Whenever you save a file, Nodemon detects the change and automatically restarts the Node.js server, reflecting the updated changes in real-time. This helps developers in maintaining a smooth development workflow, as they can see the changes they've made without the hassle of manually restarting the server after every code modification.

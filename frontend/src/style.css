@@ -1,0 +1,74 @@
+
+/* login css  */
+.btn-llg{
+    width: 100%;
+}
+
+.errorShower {
+    box-sizing: border-box;
+    color: #8B0000; /* Dark Red color */
+    padding: 0.5rem 0 0.5rem 1rem;
+    font-weight: 200;
+    font-size: large;
+    background-color: #f8d7da; /* Light red background color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    margin-bottom: 1rem;
+}
+
+/* Dashboard style */
+
+.dash-main{
+    box-sizing: border-box;
+}
+
+.dash-ul-all-color li a:hover{
+    color: white;
+}
+
+
+/* AddEmployee css */
+
+@media (min-width: 768px) {
+    .w-md-80 {
+      width: 100%;
+    }
+}
+
+/* -------------------------------------- */
+
+.employee_image_css{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+
+/* ------------------------------------------- */
+
+.back-color{
+    background: rgb(154, 97, 109);
+}
+
+.color{
+    color: rgb(163, 63, 85);
+}
+
+.color-darker{
+    color: rgb(175, 49, 76);
+}
+
+.rounded-image {
+    border-radius: 40%;
+}
+
+.width{
+    width: fit-content;
+}
+
+.child-back{
+    background: rgb(184, 180, 180);
+}
+
+.left-radius{
+    border-radius: 450px 0px 0px 450px;
+}

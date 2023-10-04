@@ -37,7 +37,8 @@ const EmployeeDetail = () => {
         <div className="d-flex justify-content-between px-4 py-4  width g-3 child-back">
           <img
             src={"http://localhost:8081/images/" + employee.image}
-            className="rounded-circle "
+            style={{width:"300px"}}
+            // className="rounded-image"
           ></img>
           <div className="d-flex flex-column p-4 color justify-content-center">
             <div>
@@ -53,9 +54,9 @@ const EmployeeDetail = () => {
               </h3>
             </div>
 
-            <div className="d-flex p-4 ">
+            <div style={{display:'flex',gap:"15px"}}>
               <Link
-                to={"http:///employeeDetail/" + employee.id}
+                to={"/updateRequest/" + employee.id}
                 className="btn btn-primary"
               >
                 Edit

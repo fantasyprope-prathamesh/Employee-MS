@@ -58,37 +58,74 @@ const upload = multer({
 //-================= Employee Login =================================================
 
 app.post("/employeeLogin", (req, res) => {
-  // console.log(req.body.email)
+  const sql = "select * from employee where email = ?";
 
-  const sql = "select * from employee where email = ? and password = ?";
-
-  con.query(sql, [req.body.email, req.body.password], (err, result1) => {
+  con.query(sql, [req.body.email], (err, result1) => {
     if (err) return res.json({ Status: "Error during query" });
 
     if (result1.length > 0) {
-      bcrypt.compare(
-        req.body.password.toString(),
-        result1[0].password,
-        (err, result2) => {
-          if (result2) {
-            console.log("bcrypt result = " + result2);
+      const storedHash = result1[0].password;
 
-            const token = jwt.sign(
-              { Role: "Employee", id: result1[0].id },
-              "emp-key",
-              { expiresIn: "1d" }
-            );
-            res.cookie("empCookie", token);
-
-            return res.json({ Result: "Successful", id: result1[0].id });
-          } else {
-            return res.json({ Result: "Unsuccessful", Error: "No Data found" });
-          }
+      bcrypt.compare(req.body.password, storedHash, (err, result2) => {
+        if (result2) {
+          const token = jwt.sign(
+            { Role: "Employee", id: result1[0].id },
+            "emp-key",
+            { expiresIn: "1d" }
+          );
+          res.cookie("empCookie", token);
+          return res.json({ Result: "Successful", id: result1[0].id });
+        } else {
+          return res.json({
+            Result: "Unsuccessful",
+            Error: "Invalid credentials",
+          });
         }
-      );
+      });
+    } else {
+      return res.json({
+        Result: "Unsuccessful",
+        Error: "No Data found for the given email",
+      });
     }
   });
 });
+
+
+// app.post("/employeeLogin", (req, res) => {
+//   console.log(req.body.email + req.body.password)
+
+//   const sql = "select * from employee where email = ? and password = ?";
+
+//   con.query(sql, [req.body.email, req.body.password], (err, result1) => {
+//     console.log(result1)
+
+//     if (err) return res.json({ Status: "Error during query" });
+
+//     if (result1.length > 0) {
+//       bcrypt.compare(
+//         req.body.password.toString(),
+//         result1[0].password,
+//         (err, result2) => {
+//           if (result2) {
+//             console.log("bcrypt result = " + result2);
+
+//             const token = jwt.sign(
+//               { Role: "Employee", id: result1[0].id },
+//               "emp-key",
+//               { expiresIn: "1d" }
+//             );
+//             res.cookie("empCookie", token);
+
+//             return res.json({ Result: "Successful", id: result1[0].id });
+//           } else {
+//             return res.json({ Result: "Unsuccessful", Error: "No Data found" });
+//           }
+//         }
+//       );
+//     }
+//   });
+// });
 
 //========================================================================
 

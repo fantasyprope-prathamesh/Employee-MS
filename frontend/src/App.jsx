@@ -10,6 +10,7 @@ import EditEmployee from "./EditEmployee.jsx";
 import Start from "./start.jsx";
 import EmployeeLogin from "./EmployeeLogin.jsx";
 import EmployeeDetail from "./EmployeeDetail.jsx";
+import UpdateRequest from "./UpdateRequest.jsx";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/editEmployee/:empId" element={<EditEmployee />} />
           </Route>
 
+          <Route path="/updateRequest/:empId" element={<UpdateRequest/>}/>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/start" element={<Start />}></Route>
           <Route path="/employeeLogin" element={<EmployeeLogin />}></Route>

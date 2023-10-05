@@ -14,7 +14,7 @@ const EditEmployee = () => {
     email: "",
     address: "",
     salary: "",
-    // image: "",
+    image: "",
   });
 
   // handling form onSubmit event..
@@ -30,6 +30,7 @@ const EditEmployee = () => {
     formData.append("email", empInfo.email);
     formData.append("address", empInfo.address);
     formData.append("salary", empInfo.salary);
+    formData.append("image", empInfo.image);
 
     console.log("Name is : " + formData.get("name"));
 

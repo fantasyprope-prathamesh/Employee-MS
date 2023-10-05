@@ -92,41 +92,6 @@ app.post("/employeeLogin", (req, res) => {
 });
 
 
-// app.post("/employeeLogin", (req, res) => {
-//   console.log(req.body.email + req.body.password)
-
-//   const sql = "select * from employee where email = ? and password = ?";
-
-//   con.query(sql, [req.body.email, req.body.password], (err, result1) => {
-//     console.log(result1)
-
-//     if (err) return res.json({ Status: "Error during query" });
-
-//     if (result1.length > 0) {
-//       bcrypt.compare(
-//         req.body.password.toString(),
-//         result1[0].password,
-//         (err, result2) => {
-//           if (result2) {
-//             console.log("bcrypt result = " + result2);
-
-//             const token = jwt.sign(
-//               { Role: "Employee", id: result1[0].id },
-//               "emp-key",
-//               { expiresIn: "1d" }
-//             );
-//             res.cookie("empCookie", token);
-
-//             return res.json({ Result: "Successful", id: result1[0].id });
-//           } else {
-//             return res.json({ Result: "Unsuccessful", Error: "No Data found" });
-//           }
-//         }
-//       );
-//     }
-//   });
-// });
-
 //========================================================================
 
 //post api..handling login page--------------------------------------
@@ -258,7 +223,7 @@ app.get("/getCurrentEmployee/:id", (request, response) => {
 
 // updateCurrentEmployee
 
-app.put("/updateCurrentEmployee/:empId", upload.none(), (req, res) => {
+app.put("/updateCurrentEmployee/:empId", upload.single("image"), (req, res) => {
   const Id = req.params.empId;
 
   const values = [
@@ -266,12 +231,13 @@ app.put("/updateCurrentEmployee/:empId", upload.none(), (req, res) => {
     req.body.email,
     req.body.address,
     req.body.salary,
+    req.file.filename,
   ];
 
-  console.log(req.body.name);
+  // console.log(req.body.name);
 
   const sql =
-    "update employee set name = ? , email = ? , address = ? , salary = ? where id = ?";
+    "update employee set name = ? , email = ? , address = ? , salary = ? , image = ? where id = ?";
 
   if (values) {
     con.query(sql, [...values, Id], (err, result) => {
@@ -342,6 +308,19 @@ app.get("/salaryCount", (req, res) => {
     return res.json(result);
   });
 });
+
+//----------------------- Email seding.. -----------------------------
+
+app.post("/sendEmail",(req,res)=>{
+  const values = [
+    req.body.name,
+    req.body.email,
+    req.body.address,
+    req.body.salary
+  ]
+
+  console.log(req.body.name)
+})
 
 //=============================================================================================
 

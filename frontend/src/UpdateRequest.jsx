@@ -8,7 +8,7 @@ import { Button, Typography } from "antd";
 const { Title, Paragraph, Text } = Typography;
 
 const UpdateRequest = () => {
-  const {empId} = useParams();
+  const { empId } = useParams();
 
   //state for managing input fields..
   const [empInfo, setEmpInfo] = useState({
@@ -38,7 +38,11 @@ const UpdateRequest = () => {
     // formData.append("image", empInfo.image);
 
     axios
-      .post("http://localhost:8081/sendEmail", formData)
+      .put("http://localhost:8081/sendEmail", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((response) => {
         console.log(response.data.status);
       })
@@ -47,22 +51,33 @@ const UpdateRequest = () => {
       });
   };
 
-  const [currentEmp,setCurrentEmp] = useState({})
-
-  useEffect(()=>{
-      axios.get(`http://localhost:8081/getCurrentEmployee/${empId}`)
-      .then((res)=>{
-        if(res){
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8081/getCurrentEmployee/${empId}`)
+      .then((res) => {
+        if (res.data.Result.length > 0) {
           // console.log(res.data.Result[0].name);
-          setCurrentEmp(res.data.Result[0])
+
+          //extracting first row
+          const [currentEmp] = res.data.Result;
+
+          setEmpInfo({
+            ...empInfo,
+            name: currentEmp.name,
+            email: currentEmp.email,
+            // password: "",
+            address: currentEmp.address,
+            salary: currentEmp.salary,
+            // image: "",
+          });
         }
       })
-      .catch((err)=>{
-        if(err){
-          console.log(err)
+      .catch((err) => {
+        if (err) {
+          console.log(err);
         }
-      })
-  },[])
+      });
+  }, []);
 
   // useEffect(()=>{
   //   if(currentEmp != null && currentEmp.length != 0){
@@ -95,7 +110,7 @@ const UpdateRequest = () => {
               onChange={(event) => {
                 setEmpInfo({ ...empInfo, name: event.target.value });
               }}
-              value={currentEmp.name ||empInfo.name}
+              value={empInfo.name}
             />
           </div>
 
@@ -113,7 +128,7 @@ const UpdateRequest = () => {
               onChange={(event) => {
                 setEmpInfo({ ...empInfo, email: event.target.value });
               }}
-              value={currentEmp.email}
+              value={empInfo.email}
             />
           </div>
 
@@ -131,7 +146,7 @@ const UpdateRequest = () => {
               onChange={(event) => {
                 setEmpInfo({ ...empInfo, salary: event.target.value });
               }}
-              value={currentEmp.salary}
+              value={empInfo.salary}
             />
           </div>
 
@@ -149,7 +164,7 @@ const UpdateRequest = () => {
               onChange={(event) => {
                 setEmpInfo({ ...empInfo, address: event.target.value });
               }}
-              value={currentEmp.address}
+              value={empInfo.address}
             />
           </div>
 

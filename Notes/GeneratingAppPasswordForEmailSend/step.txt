@@ -1,0 +1,25 @@
+The error you're encountering is related to Gmail's security settings. Google may require you to use an application-specific password when logging in from a non-browser application, like your Node.js server. Here are steps to resolve the issue:
+
+Generate an Application-Specific Password:
+
+Go to your Google Account Security.
+Under "Signing in to Google," find "App passwords" and click on "App passwords."
+Generate a new app password for your Node.js application. Choose "Other (Custom Name)" as the app and give it a name.
+Update Your Node.js Application:
+
+Replace the password in your nodemailer configuration with the application-specific password you generated.
+javascript
+Copy code
+let mailTransporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "prathameshasynchronouslife@gmail.com",
+    pass: "your-application-specific-password" // Use the generated app password here
+  }
+});
+Make sure to replace "your-application-specific-password" with the actual application-specific password you generated in the Google Account settings.
+
+Restart Your Node.js Server:
+
+After making these changes, restart your Node.js server and see if the error persists.
+This should resolve the issue. Application-specific passwords are used to enhance the security of your Google account when accessing it from third-party applicationss.

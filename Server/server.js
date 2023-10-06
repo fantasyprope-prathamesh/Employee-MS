@@ -8,7 +8,12 @@ import multer from "multer";
 import path from "path";
 import { error } from "console";
 
+import dotenv from 'dotenv';
+dotenv.config();
+
+
 // const mysql = require("mysql");
+import nodemailer from "nodemailer";
 
 const app = express();
 app.use(
@@ -22,6 +27,16 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.static("public"));
 
+// const bodyParser = require('body-parser');
+import bodyParser from "body-parser";
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+//----------------------------------------------------------
+
+
+
+//----------------------------------------------
 //creating connection..
 const con = mysql.createConnection({
   host: "localhost",
@@ -90,7 +105,6 @@ app.post("/employeeLogin", (req, res) => {
     }
   });
 });
-
 
 //========================================================================
 
@@ -310,20 +324,55 @@ app.get("/salaryCount", (req, res) => {
 });
 
 //----------------------- Email seding.. -----------------------------
+app.put("/sendEmail", upload.none(), (req, res) => {
+  const values = {
+    name: req.body.name,
+    email: req.body.email,
+    address: req.body.address,
+    salary: req.body.salary,
+  };
 
-app.post("/sendEmail",(req,res)=>{
-  const values = [
-    req.body.name,
-    req.body.email,
-    req.body.address,
-    req.body.salary
-  ]
+  let mailTransporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_PASS
+    },
+  });
 
-  console.log(req.body.name)
-})
+  let details = {
+    from: "prathameshasynchronouslife@gmail.com",
+    to: "prathameshpatil.parite@gmail.com",
+    subject: "Testing our email feature",
+    text: `name : ${values.name}\nemail : ${values.email}\naddress : ${values.address}\nsalary : ${values.salary}`,
+  };
+
+  mailTransporter.sendMail(details, (err) => {
+    if (err) {
+      console.log("Error during sendMail:", err);
+      return res.json({ status: "error" });
+    } else {
+      console.log("Mail has been sent successfully :)");
+      return res.json({ status: "success" });
+    }
+  });
+});
 
 //=============================================================================================
+// getAdmins..
 
+app.get("/getAdmins", (req, res) => {
+  const sql = "select * from users";
+  con.query(sql, (err, result) => {
+    if (err) {
+      return res.json({ Status: "Failed to retrieve data" });
+    }
+    console.log(result);
+    return res.json(result);
+  });
+});
+
+//----------------------------------------------------------------------------------------------
 //start server..
 
 app.listen(8081, () => {

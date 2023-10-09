@@ -362,12 +362,12 @@ app.put("/sendEmail", upload.none(), (req, res) => {
 // getAdmins..
 
 app.get("/getAdmins", (req, res) => {
-  const sql = "select * from users";
+  const sql = "select id,  name , email , action from users";
   con.query(sql, (err, result) => {
     if (err) {
       return res.json({ Status: "Failed to retrieve data" });
     }
-    console.log(result);
+    // console.log(result);
     return res.json(result);
   });
 });

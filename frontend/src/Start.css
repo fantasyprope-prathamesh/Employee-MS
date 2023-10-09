@@ -39,3 +39,9 @@
     background-color: #45a049; /* Darken the color on hover */
   }
   
+
+/* home css */
+
+.custome-table  {
+  border: 1px solid rgb(12, 12, 12);
+}

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import axios from "axios";
 import "./style.css";
+import "./Start.css";
 import { Table, Typography } from "antd";
 
 const { Title, Text, Paragraph } = Typography;
@@ -48,30 +49,80 @@ const Home = () => {
 
   //------------------------------------------------------------------
 
+  //Data set of admin ..
+
   const [adminData, setAdminData] = useState([]);
+  const [loading, setLoading] = useState(true);
   //retrieve Admin Data..
 
-  useEffect(() => {
-    const getData = ()=>{
-      axios
-      .get("http://localhost:8081/getAdmins")
-      .then((res) => {
-        if (res) {
-          
-          console.log("Admins are present");
-          console.log(res.data.result[0])
-        } else {
-          console.log("NO admins");
+  //  Memoized columns
+  const columns = useMemo(
+    () => [
+      {
+        title: <span style={{color:"blue"}}>Name</span>,
+        dataIndex: "name",
+        key: "name",
+        render : (text,record)=>{
+          return(
+            <div style={{color:"black"}}>
+              {record.name}
+            </div>
+          )
         }
-      })
-      .catch((err) => {
-        console.log("Error from server");
-      });
-    }
+      },
+
+      {
+        title: <span style={{color:"blue"}}>Email</span>,
+        dataIndex: "email",
+        render : (text,record)=>{
+          return(
+            <div style={{color:"black"}}>
+              {text}
+            </div>
+          )
+        }
+      },
+      {
+        title: <span style={{color:"blue"}}>Action</span>,
+        dataIndex: "action",
+        render : (text,record)=>{
+          return(
+            <div>
+              {text}
+            </div>
+          )
+        }
+      },
+    ],
+    []
+  );
+
+  useEffect(() => {
+    const getData = () => {
+      axios
+        .get("http://localhost:8081/getAdmins")
+        .then((res) => {
+          if (res) {
+            console.log("Admins are present");
+            console.log(res.data);
+            setAdminData(res.data);
+            setLoading(false);
+          } else {
+            console.log("NO admins");
+          }
+        })
+        .catch((err) => {
+          console.log("Error from server");
+        });
+    };
 
     getData();
-    
   }, []);
+
+  useEffect(() => {
+    console.log("admindata Yoo: ");
+    console.log(adminData);
+  }, [adminData]);
 
   return (
     <>
@@ -118,8 +169,39 @@ const Home = () => {
             List Of Admins
           </Title>
 
-          {/* table */}
-          <Table dataSource={[]} columns={[]}></Table>
+          {loading && <div>Loading...</div>}
+
+          {!loading && adminData.length === 0 && <div>No data available.</div>}
+
+          {/* <table className="table ">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            {!loading && adminData.length > 0 && (
+              <tbody>
+                {adminData.map((item, indx) => {
+                  return (
+                    <tr>
+                      <td>{item.name}</td>
+                      <td>{item.email}</td>
+                      <td>{item.action}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            )}
+          </table> */}
+
+          <Table
+            dataSource={adminData}
+            columns={columns}
+            // style={{ border: "1px solid black" }}
+            className="custome-table"
+          ></Table>
         </div>
       </div>
     </>

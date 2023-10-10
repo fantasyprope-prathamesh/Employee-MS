@@ -373,6 +373,46 @@ app.get("/getAdmins", (req, res) => {
 });
 
 //----------------------------------------------------------------------------------------------
+  //Storing leave information into db..
+  app.post("/leaveRequest/:id", (req, res) => {
+    // Check if request has a body
+    if (req.body) {
+      const sql1 = "SELECT name, email FROM employee WHERE id = ?";
+      con.query(sql1, [req.params.id], (err, result1) => {
+        if (err) {
+          console.log("Error during query execution:", err);
+          res.status(500).send("Internal Server Error");
+        } else {
+          if (result1.length > 0) {
+            const { name, email } = result1[0];
+  
+            const sql2 =
+              "INSERT INTO leaveinfo(empName, leaveType, startDate, endDate, reason, status) VALUES (?, ?, ?, ?, ?, ?)";
+            const values = [name, req.body.leaveType, req.body.startDate, req.body.endDate, req.body.reason, req.body.status];
+  
+            con.query(sql2, values, (err2, result2) => {
+              if (err2) {
+                console.log("Something went wrong during the second insert query:", err2);
+                res.status(500).send("Internal Server Error");
+              } else {
+                console.log("Data inserted successfully :)");
+                // return res.json({Status : "Successfully inserted emp"})
+                res.status(200).send("Leave request submitted successfully");
+              }
+            });
+          } else {
+            console.log("No employee data found for the given ID");
+            res.status(404).send("Employee not found");
+          }
+        }
+      });
+    } else {
+      console.log("No data in the request body");
+      res.status(400).send("Bad Request");
+    }
+  });
+  
+//------------------------------------------------------------------------------------------------
 //start server..
 
 app.listen(8081, () => {

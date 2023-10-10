@@ -1,20 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import "./style.css";
 
 const EmployeeDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [employee, setEmployee] = useState({});
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:8081/getCurrentEmployee/" + id)
-      .then((res) => {
-        setEmployee(res.data.Result[0]);
-      })
-      .catch((err) => [console.log(err)]);
-  }, []);
 
   const handleLogout = () => {
     axios
@@ -28,46 +20,93 @@ const EmployeeDetail = () => {
         console.log(error);
       });
   };
+  //------------------------------------------------------------------
 
-  //------------------
+  //-----------------------------------------------------------------
 
   return (
     <>
-      <div className="d-flex justify-content-center align-items-center vh-100 back-color">
-        <div className="d-flex justify-content-between px-4 py-4  width g-3 child-back">
-          <img
-            src={"http://localhost:8081/images/" + employee.image}
-            style={{width:"300px"}}
-            // className="rounded-image"
-          ></img>
-          <div className="d-flex flex-column p-4 color justify-content-center">
-            <div>
-              <h3>
-                <span className="color-darker">Name : </span> {employee.name}
-              </h3>
-              <h3>
-                <span className="color-darker">Email : </span> {employee.email}
-              </h3>
-              <h3>
-                <span className="color-darker">Salary : </span>{" "}
-                {employee.salary}
-              </h3>
+      <div>
+        <div className="container-fluid ">
+          <div className="row flex-nowrap ">
+            {/* left side bar */}
+            <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark ">
+              <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-5 text-white min-vh-100">
+                <a
+                  href="#"
+                  className="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+                >
+                  <span className="" style={{fontSize:'1.2rem'}}>
+                    Employee Dashboard
+                  </span>
+                </a>
+
+                {/*  */}
+                <ul
+                  className="dash-ul-all-color nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                  id="menu"
+                >
+                  <li className="nav-item ">
+                    <Link to={""} className="nav-link align-middle px-0 ">
+                      <i className="fs-4 bi-speedometer2"></i>{" "}
+                      <span className="ms-1 d-none d-sm-inline">Dashboard</span>{" "}
+                    </Link>
+                  </li>
+
+                  {/*  */}
+                  <li>
+                    <Link
+                      to={"leaverequest"}
+                      data-bs-toggle="collapse"
+                      className="nav-link px-0 align-middle"
+                    >
+                      <i className="fs-4 bi-people"></i>{" "}
+                      <span className="ms-1 d-none d-sm-inline">
+                        Leave Request from
+                      </span>{" "}
+                    </Link>
+                  </li>
+
+                  {/*  */}
+                  <li>
+                    <Link
+                      to={"updaterequest"}
+                      className="nav-link px-0 align-middle"
+                    >
+                      <i className="fs-4 bi-person"></i>{" "}
+                      <span className="ms-1 d-none d-sm-inline">Update Request</span>
+                    </Link>
+                  </li>
+
+                  {/*  */}
+                  <li>
+                    <Link
+                      onClick={handleLogout}
+                      href="#"
+                      className="nav-link px-0 align-middle"
+                    >
+                      <i className="fs-4 bi-power"></i>{" "}
+                      <span className="ms-1 d-none d-sm-inline">Log Out</span>{" "}
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             </div>
 
-            <div style={{display:'flex',gap:"15px"}}>
-              <Link
-                to={"/updateRequest/" + employee.id}
-                className="btn btn-primary"
-              >
-                Edit
-              </Link>
-              <button className="btn btn-success" onClick={handleLogout}>
-                Log Out
-              </button>
+            {/* right portion area */}
+
+            <div className="col p-0 m-0  ">
+              <div className="border p-2 d-flex justify-content-center shadow">
+                <h4>Employee Management System</h4>
+              </div>
+
+              <Outlet id={id} />
+
             </div>
           </div>
         </div>
       </div>
+
     </>
   );
 };

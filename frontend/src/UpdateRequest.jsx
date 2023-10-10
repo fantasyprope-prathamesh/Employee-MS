@@ -8,7 +8,7 @@ import { Button, Typography } from "antd";
 const { Title, Paragraph, Text } = Typography;
 
 const UpdateRequest = () => {
-  const { empId } = useParams();
+  const { id } = useParams();
 
   //state for managing input fields..
   const [empInfo, setEmpInfo] = useState({
@@ -53,7 +53,7 @@ const UpdateRequest = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8081/getCurrentEmployee/${empId}`)
+      .get(`http://localhost:8081/getCurrentEmployee/${id}`)
       .then((res) => {
         if (res.data.Result.length > 0) {
           // console.log(res.data.Result[0].name);

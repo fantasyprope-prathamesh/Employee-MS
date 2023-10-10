@@ -11,6 +11,8 @@ import Start from "./start.jsx";
 import EmployeeLogin from "./EmployeeLogin.jsx";
 import EmployeeDetail from "./EmployeeDetail.jsx";
 import UpdateRequest from "./UpdateRequest.jsx";
+import EmployeesProfiles from "./EmployeesProfiles.jsx";
+import LeaveRequestForm from "./LeaveRequestForm.jsx";
 
 function App() {
   return (
@@ -25,14 +27,16 @@ function App() {
             <Route path="/editEmployee/:empId" element={<EditEmployee />} />
           </Route>
 
-          <Route path="/updateRequest/:empId" element={<UpdateRequest/>}/>
+          
           <Route path="/login" element={<Login />}></Route>
           <Route path="/start" element={<Start />}></Route>
           <Route path="/employeeLogin" element={<EmployeeLogin />}></Route>
-          <Route
-            path="/employeeDetail/:id"
-            element={<EmployeeDetail />}
-          ></Route>
+
+          <Route path="/employeeDetail/:id" element={<EmployeeDetail />}>
+            <Route path="" element={<EmployeesProfiles/>} />
+            <Route path="leaverequest" element={<LeaveRequestForm/>} />
+            <Route path="updaterequest" element={<UpdateRequest />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </>

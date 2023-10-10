@@ -413,6 +413,118 @@ app.get("/getAdmins", (req, res) => {
   });
   
 //------------------------------------------------------------------------------------------------
+// fetching data from leaveinfo table..
+
+  app.get("/fetchLeaveData" , (req,res)=>{
+    const sql = "select id, empName,leaveType,startDate,endDate,reason,status from leaveinfo";
+
+    con.query(sql,(err,result)=>{
+      if(err){
+
+        console.log("Error during query")
+        res.status(500).send("Error during query")
+      }else if(result.length > 0){
+        console.log("Data fetch successfullly");
+        return res.json(result)
+      }else{
+        console.log("No data found")
+        res.status(404).send("No data fround!!")
+      }
+    })
+  })
+
+//----------------------------------------------------------------------------------------------
+//handle Status of leave
+
+app.post("/handleStatus" , (req,res)=>{
+  console.log(req.body.id,req.body.status);
+  const id = req.body.id;
+  let status = "";
+  if(req.body.status === "yes"){
+    status = "Approved";
+    console.log(status,id)
+  }else if(req.body.status === "no"){
+    status = "Rejected";
+  }else{
+    status = "Pending";
+  }
+
+  const sql = "update leaveinfo set status = ? where id = ?";
+  con.query(sql,[status,id],(err,result)=>{
+    console.log("inside querryy")
+    if(err){
+      res.status(500).send("Error during query..");
+    }
+    else if(result.affectedRows > 0){
+      console.log("Status changed successfully")
+      res.status(200).send("success")
+    }
+  })
+
+})
+//------------------------------------------------------------------------------------------------
+//Manage Leave email..
+app.post("/handleLeaveEmail",(req,res)=>{
+  console.log("here i am>:",req.body)
+
+  //hr finding...
+  let admin = "";
+  const sql = "select name from users where action = ?";
+  con.query(sql,["hr"],(err,result)=>{
+    if(err){
+      res.status(500).send("Erro during query..")
+    }else if(result){
+      admin = result[0].name
+      console.log('admin',result[0].name)
+    }
+
+    // console.log('admin',result.body)
+  })
+
+  const values = {
+    name: req.body.empName,
+    type: req.body.leaveType,
+    start: req.body.startDate,
+    end: req.body.endDate,
+    admin : admin,
+    status : req.body.status,
+  };
+
+  let mailTransporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_PASS
+    },
+  });
+
+  let details = {
+    from: "prathameshasynchronouslife@gmail.com",
+    to: "prathameshpatil.parite@gmail.com",
+    subject: "Testing our email feature",
+    text: `Subject : Leave Request Approval\n
+           Dear : ${values.name}\n
+           Your leave request has been ${values.status}\n
+           Details : \n
+           - Leave Type : ${values.type}\n
+           - Start Date : ${values.start}\n
+           - End Date   : ${values.end}\n
+           Best Regards ,\n
+           ${values.admin}`,
+  };
+
+  mailTransporter.sendMail(details, (err) => {
+    if (err) {
+      console.log("Error during sendMail:", err);
+      return res.json({ status: "error" });
+    } else {
+      console.log("Mail has been sent successfully :)");
+      return res.json({ status: "success" });
+    }
+  });
+})
+
+//----------------------------------------------------------------------------------------------
 //start server..
 
 app.listen(8081, () => {

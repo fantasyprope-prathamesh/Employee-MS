@@ -13,6 +13,7 @@ import EmployeeDetail from "./EmployeeDetail.jsx";
 import UpdateRequest from "./UpdateRequest.jsx";
 import EmployeesProfiles from "./EmployeesProfiles.jsx";
 import LeaveRequestForm from "./LeaveRequestForm.jsx";
+import LeaveRequestManage from "./LeaveRequestManage.jsx";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/profile" element={<Profile />}></Route>
             <Route path="/addEmployee" element={<AddEmployee />}></Route>
             <Route path="/editEmployee/:empId" element={<EditEmployee />} />
+            <Route path="/leaverequestmanage" element={<LeaveRequestManage/>}/>
           </Route>
 
           
@@ -36,6 +38,7 @@ function App() {
             <Route path="" element={<EmployeesProfiles/>} />
             <Route path="leaverequest" element={<LeaveRequestForm/>} />
             <Route path="updaterequest" element={<UpdateRequest />} />
+            
           </Route>
         </Routes>
       </BrowserRouter>

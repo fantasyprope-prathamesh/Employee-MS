@@ -106,7 +106,22 @@ const Dashboard = () => {
                     </Link>
                   </li>
 
-                  {/*Profile  */}
+                  {/* Task Management -------------------------------------------- */}
+                  <li>
+                    <Link
+                      to={"/taskoverview"}
+                      data-bs-toggle="collapse"
+                      className="nav-link px-0 align-middle"
+                    >
+                      <i className="fs-4 bi-people"></i>{" "}
+                      <span className="ms-1 d-none d-sm-inline">
+                        Task Management
+                      </span>{" "}
+                    </Link>
+                  </li>
+
+
+                  {/*Profile  -----------------------------------------------------*/}
                   <li>
                     <Link
                       to={"/profile"}

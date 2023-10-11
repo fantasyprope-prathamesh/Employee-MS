@@ -34,6 +34,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 //----------------------------------------------------------
 
+//--------------------------------------------------------
+// Apis imports ..
+import FetchTasks from "./Apis/FetchTasks.js"
 
 
 //----------------------------------------------
@@ -245,13 +248,13 @@ app.put("/updateCurrentEmployee/:empId", upload.single("image"), (req, res) => {
     req.body.email,
     req.body.address,
     req.body.salary,
-    req.file.filename,
+    req.file ? req.file.filename : null,
   ];
 
   // console.log(req.body.name);
 
-  const sql =
-    "update employee set name = ? , email = ? , address = ? , salary = ? , image = ? where id = ?";
+  const sql = "UPDATE employee SET name = ?,email = ?,address = ?,salary = ?,image = COALESCE(NULLIF(?, NULL), image) WHERE id = ?";
+    // "update employee set name = ? , email = ? , address = ? , salary = ? , image = COALESCE(NULIF(?,'),image) where id = ?";
 
   if (values) {
     con.query(sql, [...values, Id], (err, result) => {
@@ -525,6 +528,10 @@ app.post("/handleLeaveEmail",(req,res)=>{
 })
 
 //----------------------------------------------------------------------------------------------
+  app.get("/fetchTasksData",(req,res)=>{
+    FetchTasks(req,res,con);
+  })
+//-----------------------------------------------------------------------------------------------
 //start server..
 
 app.listen(8081, () => {

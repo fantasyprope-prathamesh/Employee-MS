@@ -14,6 +14,8 @@ import UpdateRequest from "./UpdateRequest.jsx";
 import EmployeesProfiles from "./EmployeesProfiles.jsx";
 import LeaveRequestForm from "./LeaveRequestForm.jsx";
 import LeaveRequestManage from "./LeaveRequestManage.jsx";
+import TaskOverView from "./TaskOverview.jsx";
+import AssignNewTask from "./AssignNewTask.jsx";
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
             <Route path="/addEmployee" element={<AddEmployee />}></Route>
             <Route path="/editEmployee/:empId" element={<EditEmployee />} />
             <Route path="/leaverequestmanage" element={<LeaveRequestManage/>}/>
+            <Route path="/taskoverview" element={<TaskOverView/>}/>
+            <Route path="/assignnewtask" element={<AssignNewTask/>}/>
           </Route>
 
           

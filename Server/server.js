@@ -210,6 +210,7 @@ app.get("/getEmployees", (request, response) => {
   con.query(sql, (err, result) => {
     if (err) return response.json({ Error: "Error during select operation" });
 
+    console.log("empooo data : ", result)
     return response.json({ Status: "Success", Result: result });
   });
 });

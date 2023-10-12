@@ -41,7 +41,7 @@ const EmployeeDetail = () => {
                   </span>
                 </a>
 
-                {/*  */}
+                {/* dashboard */}
                 <ul
                   className="dash-ul-all-color nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                   id="menu"
@@ -53,7 +53,7 @@ const EmployeeDetail = () => {
                     </Link>
                   </li>
 
-                  {/*  */}
+                  {/* leave request */}
                   <li>
                     <Link
                       to={"leaverequest"}
@@ -67,7 +67,21 @@ const EmployeeDetail = () => {
                     </Link>
                   </li>
 
-                  {/*  */}
+                  {/* Task manager */}
+                  <li>
+                    <Link
+                      to={"taskmanager"}
+                      data-bs-toggle="collapse"
+                      className="nav-link px-0 align-middle"
+                    >
+                      <i className="fs-4 bi-people"></i>{" "}
+                      <span className="ms-1 d-none d-sm-inline">
+                        Task Manager
+                      </span>{" "}
+                    </Link>
+                  </li>
+
+                  {/* update request */}
                   <li>
                     <Link
                       to={"updaterequest"}

@@ -16,6 +16,7 @@ import LeaveRequestForm from "./LeaveRequestForm.jsx";
 import LeaveRequestManage from "./LeaveRequestManage.jsx";
 import TaskOverView from "./TaskOverview.jsx";
 import AssignNewTask from "./AssignNewTask.jsx";
+import TaskManager from "./taskmanager.jsx";
 
 function App() {
   return (
@@ -42,7 +43,7 @@ function App() {
             <Route path="" element={<EmployeesProfiles/>} />
             <Route path="leaverequest" element={<LeaveRequestForm/>} />
             <Route path="updaterequest" element={<UpdateRequest />} />
-            
+            <Route path="taskmanager" element={<TaskManager/>} />
           </Route>
         </Routes>
       </BrowserRouter>

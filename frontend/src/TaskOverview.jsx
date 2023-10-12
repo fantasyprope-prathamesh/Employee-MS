@@ -50,7 +50,7 @@ const TaskOverView = () => {
       title: "Task Description",
       dataIndex: "task_description",
       render: (text, record) => {
-        return <div>{text}</div>;
+        return <div style={{maxWidth:"10rem"}}>{text}</div>;
       },
     },
     {

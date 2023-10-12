@@ -84,6 +84,19 @@ const AssignNewTask = () => {
 
   const handleAssignTask = () => {
     console.log("all tasks : ", taskInfo);
+
+    axios.post("http://localhost:8081/assignTask", taskInfo)
+    .then((res)=>{
+      if(res){
+        console.log(res);
+      }else{
+        console.log("No data found")
+      }
+    })
+    .catch((err)=>{
+      console.log("Err during request");
+    })
+
   };
   //------------------------------------------------------------------------------
 

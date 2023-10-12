@@ -37,6 +37,9 @@ app.use(bodyParser.json());
 //--------------------------------------------------------
 // Apis imports ..
 import FetchTasks from "./Apis/FetchTasks.js"
+import AssignTask from "./Apis/AssignTask.js";
+import MyTasks from "./Apis/MyTasks.js";
+import UpdateTaskStatus from "./Apis/UpdateTaskStatus.js";
 
 
 //----------------------------------------------
@@ -533,6 +536,24 @@ app.post("/handleLeaveEmail",(req,res)=>{
     FetchTasks(req,res,con);
   })
 //-----------------------------------------------------------------------------------------------
+//add tasks..
+
+app.post("/assignTask",(req,res)=>{
+  AssignTask(req,res,con);
+})  
+
+//------------------------------------------------------------------------------
+//my tasks..
+app.get("/myTasks/:id",(req,res)=>{
+  MyTasks(req,res,con)
+})
+
+//---------------------------------------------------------------------------------------
+app.put("/updateTaskStatus/:id",(req,res)=>{
+  UpdateTaskStatus(req,res,con);
+})
+
+//---------------------------------------------------------------------------------
 //start server..
 
 app.listen(8081, () => {

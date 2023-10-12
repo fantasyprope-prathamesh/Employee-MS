@@ -1,0 +1,13 @@
+/* Custom styles for the table */
+/* #d8d6f0 */
+/* #edd6f0 */
+body{
+    background-color: #d8d6f0;
+}
+
+.table-header{
+    color: rgb(77, 77, 235);
+    font-size: large;
+    display: flex;
+    justify-content: center;
+}

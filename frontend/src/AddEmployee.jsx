@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./style.css";
 import axios from "axios";
+import { Button } from "antd";
 
 const AddEmployee = () => {
   //state for managing input fields..
@@ -45,16 +46,33 @@ const AddEmployee = () => {
 
   return (
     <>
-      <div className="container w-50 mt-5 border">
+      <div
+        className="container w-50 mt-2 border rounded"
+        style={{ backgroundColor: "#f2f2f2" }}
+      >
         {/* heading */}
-        <div className="px-3 text-center">
-          <h3>Add Employee</h3>
+
+        <div
+          className="p-2"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            color: "#4d88ff",
+            fontSize: "1.5rem",
+            fontWeight: "500",
+          }}
+        >
+          Add Employee
         </div>
 
         {/* form */}
         <form onSubmit={handleSubmit}>
-          <div className="mb-3 mt-3">
-            <label for="name" className="form-label">
+          <div className="mb-3 mt-1">
+            <label
+              for="name"
+              className="form-label"
+              style={{ fontWeight: "500" }}
+            >
               Name:
             </label>
             <input
@@ -71,7 +89,11 @@ const AddEmployee = () => {
           </div>
 
           <div className="mb-3 mt-3">
-            <label for="email" className="form-label">
+            <label
+              for="email"
+              className="form-label"
+              style={{ fontWeight: "500" }}
+            >
               Email:
             </label>
             <input
@@ -88,7 +110,11 @@ const AddEmployee = () => {
           </div>
 
           <div className="mb-3">
-            <label for="pwd" className="form-label">
+            <label
+              for="pwd"
+              className="form-label"
+              style={{ fontWeight: "500" }}
+            >
               Password:
             </label>
             <input
@@ -105,7 +131,11 @@ const AddEmployee = () => {
           </div>
 
           <div className="mb-3">
-            <label for="salary" className="form-label">
+            <label
+              for="salary"
+              className="form-label"
+              style={{ fontWeight: "500" }}
+            >
               Salary:
             </label>
             <input
@@ -122,7 +152,11 @@ const AddEmployee = () => {
           </div>
 
           <div className="mb-3">
-            <label for="address" className="form-label">
+            <label
+              for="address"
+              className="form-label"
+              style={{ fontWeight: "500" }}
+            >
               Address:
             </label>
             <input
@@ -150,7 +184,11 @@ const AddEmployee = () => {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary">
+          <button
+            type="submit"
+            className="btn btn-primary mb-2"
+            style={{ fontWeight: "500" }}
+          >
             Create
           </button>
         </form>

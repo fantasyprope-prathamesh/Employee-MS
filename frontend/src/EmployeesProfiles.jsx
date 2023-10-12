@@ -33,15 +33,16 @@ const EmployeesProfiles = () => {
 
   return (
     <>
-      <div className="d-flex justify-content-center align-items-center vh-100 back-color">
-        <div className="d-flex justify-content-between px-4 py-4  width g-3 child-back">
+      <div className="d-flex justify-content-center align-items-center vh-100 " >
+      {/* style={{backgroundColor:"#d8d6f0"}} */}
+        <div className="d-flex justify-content-between px-4 py-4  width g-3 " style={{backgroundColor:"#80aaff",boxShadow:"3px 3px 4px 0px #000066"}}>
           <img
             src={"http://localhost:8081/images/" + employee.image}
             style={{ width: "300px" }}
             // className="rounded-image"
           ></img>
           <div className="d-flex flex-column p-4 color justify-content-center">
-            <div>
+            <div style={{color:"#661aff"}}>
               <h3>
                 <span className="color-darker">Name : </span> {employee.name}
               </h3>

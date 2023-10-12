@@ -1,0 +1,11 @@
+.table-header{
+    color: rgb(77, 77, 235);
+    font-size: large;
+    display: flex;
+    justify-content: center;
+}
+
+.row-css{
+    font-weight: 400;
+    font-size: 1rem;
+}

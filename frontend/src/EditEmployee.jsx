@@ -89,16 +89,16 @@ const EditEmployee = () => {
 
   return (
     <>
-      <div className="container w-50 mt-5 border">
-        {/* heading */}
-        <div className="px-3 text-center">
-          <h3>Update Employee </h3>
+      <div className="container w-50 mt-5 border card" style={{backgroundColor:"#f2f2f2"}}>
+        
+        <div className="p-3" style={{display:'flex',justifyContent:"center",color:"#4d88ff",fontSize:"1.5rem",fontWeight:"500"}}>
+          Update Employee 
         </div>
 
         {/* form */}
         <form onSubmit={handleSubmit}>
           <div className="mb-3 mt-3">
-            <label htmlFor="name" className="form-label">
+            <label htmlFor="name" className="form-label" style={{fontWeight:"500"}}>
               Name:
             </label>
             <input
@@ -117,7 +117,7 @@ const EditEmployee = () => {
           </div>
 
           <div className="mb-3 mt-3">
-            <label htmlFor="email" className="form-label">
+            <label htmlFor="email" className="form-label" style={{fontWeight:"500"}}>
               Email:
             </label>
             <input
@@ -136,7 +136,7 @@ const EditEmployee = () => {
           </div>
 
           <div className="mb-3">
-            <label htmlFor="salary" className="form-label">
+            <label htmlFor="salary" className="form-label" style={{fontWeight:"500"}}>
               Salary:
             </label>
             <input
@@ -155,7 +155,7 @@ const EditEmployee = () => {
           </div>
 
           <div className="mb-3">
-            <label htmlFor="address" className="form-label">
+            <label htmlFor="address" className="form-label" style={{fontWeight:"500"}}>
               Address:
             </label>
             <input
@@ -188,7 +188,7 @@ const EditEmployee = () => {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-primary mb-3">
             Create
           </button>
         </form>

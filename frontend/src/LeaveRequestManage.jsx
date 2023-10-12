@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./style.css";
+import "./allcss/leave.css"
 import { Row, Col, Typography, Button, Input, Table } from "antd";
 
 const { Title, Paragraph, Text } = Typography;
@@ -83,59 +84,59 @@ const LeaveRequestManage = () => {
   //creating coilumn
   const columns = [
     {
-      title: "Id",
+      title: <span className="table-header">Id</span>,
       dataIndex: "id",
       render: (text, record) => {
-        return <div >{text}</div>;
+        return <div className="row-css">{text}</div>;
       },
     },
     {
-      title: "Name",
+      title: <span className="table-header">Name</span>,
       dataIndex: "empName",
       render: (text, record) => {
-        return <div>{text}</div>;
+        return <div className="row-css">{text}</div>;
       },
     },
     {
-        title: "Leave Type",
+        title: <span className="table-header">Leave Type</span>,
         dataIndex: "leaveType",
         render: (text, record) => {
-          return <div>{text}</div>;
+          return <div className="row-css">{text}</div>;
         },
       },
       {
-        title: "Start Date",
+        title: <span className="table-header">Start Date</span>,
         dataIndex: "startDate",
         render: (text, record) => {
-          return <div>{text}</div>;
+          return <div className="row-css">{text}</div>;
         },
       },
       {
-        title: "End Date",
+        title: <span className="table-header">End Date</span>,
         dataIndex: "endDate",
         render: (text, record) => {
-          return <div>{text}</div>;
+          return <div className="row-css">{text}</div>;
         },
       },
       {
-        title: "Reason",
+        title: <span className="table-header">Reason</span>,
         dataIndex: "reason",
         render: (text, record) => {
-          return <div style={{maxWidth:"10rem"}}>{text}</div>;
+          return <div style={{maxWidth:"10rem"}}className="row-css">{text}</div>;
         },
       },
       {
-        title: "Status",
+        title: <span className="table-header">Status</span>,
         dataIndex: "status",
         sorter: (a, b) => b.status.localeCompare(a.status),
         render: (text, record) => {
           return (
-            text === "Rejected" ? <div style={{color:"red"}}>{text}</div> : <div style={{color:"blue"}}>{text}</div>
+            text === "Rejected" ? <div style={{color:"red"}} className="row-css">{text}</div> : <div style={{color:"blue"}}>{text}</div>
           );
         },
       },
       {
-        title: "Last",
+        title: <span className="table-header">Last</span>,
         dataIndex: "lastOne",
         render : (text,record)=>{
           return(
@@ -166,7 +167,8 @@ const LeaveRequestManage = () => {
             <p>Loading...</p>
           ) : (
             <Table dataSource={leaveData} columns={columns}
-            style={{border:"1px solid black"}}
+            // style={{}}
+            className="card"
             ></Table>
           )}
         </div>

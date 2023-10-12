@@ -3,6 +3,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import axios from "axios";
 import "./style.css";
 import "./Start.css";
+import "./allcss/home.css"
 import { Table, Typography } from "antd";
 
 const { Title, Text, Paragraph } = Typography;
@@ -59,12 +60,12 @@ const Home = () => {
   const columns = useMemo(
     () => [
       {
-        title: <span style={{color:"blue"}}>Name</span>,
+        title: <span className="table-header" style={{fontWeight:"700"}}>Name</span>,
         dataIndex: "name",
         key: "name",
         render : (text,record)=>{
           return(
-            <div style={{color:"black"}}>
+            <div style={{fontSize:"1rem"}}>
               {record.name}
             </div>
           )
@@ -72,22 +73,22 @@ const Home = () => {
       },
 
       {
-        title: <span style={{color:"blue"}}>Email</span>,
+        title: <span className="table-header" style={{fontWeight:"700"}}>Email</span>,
         dataIndex: "email",
         render : (text,record)=>{
           return(
-            <div style={{color:"black"}}>
+            <div style={{fontSize:"1rem"}}>
               {text}
             </div>
           )
         }
       },
       {
-        title: <span style={{color:"blue"}}>Action</span>,
+        title: <span className="table-header" style={{fontWeight:"700"}}>Action</span>,
         dataIndex: "action",
         render : (text,record)=>{
           return(
-            <div>
+            <div style={{fontSize:"1rem"}}>
               {text}
             </div>
           )
@@ -126,12 +127,13 @@ const Home = () => {
 
   return (
     <>
+
       <div>
         <div className="container mt-3  ">
           <div className="row g-3 py-3 justify-content-around">
             {/* admin */}
-            <div className="col col-12 col-sm-6 col-md-4 col-lg-3 px-3 pt-1 pb-3 border ">
-              <div className="text-center">
+            <div className="card col col-12 col-sm-6 col-md-4 col-lg-3 px-3 pt-1 pb-3 border ">
+              <div className="text-center table-header">
                 <h3>Admin</h3>
               </div>
               <hr />
@@ -140,8 +142,8 @@ const Home = () => {
               </div>
             </div>
             {/* employee */}
-            <div className="col col col-12 col-sm-6 col-md-4 col-lg-3 px-3 pt-1 pb-3 border">
-              <div className="text-center">
+            <div className="card col col col-12 col-sm-6 col-md-4 col-lg-3 px-3 pt-1 pb-3 border">
+              <div className="text-center table-header">
                 <h3>Employee</h3>
               </div>
               <hr />
@@ -150,8 +152,8 @@ const Home = () => {
               </div>
             </div>
             {/* salary */}
-            <div className="col col col-12 col-sm-6 col-md-4 col-lg-3 px-3 pt-1 pb-3 border">
-              <div className="text-center">
+            <div className="card col col col-12 col-sm-6 col-md-4 col-lg-3 px-3 pt-1 pb-3 border">
+              <div className="text-center table-header">
                 <h3>Salary</h3>
               </div>
               <hr />
@@ -166,7 +168,7 @@ const Home = () => {
         <div className="mt-3 px-5 pt-2">
           {/* <h4 className="">List Of Admins</h4> */}
           <Title level={2} style={{ color: "#0052cc" }}>
-            List Of Admins
+            List of admins
           </Title>
 
           {loading && <div>Loading...</div>}
@@ -199,8 +201,8 @@ const Home = () => {
           <Table
             dataSource={adminData}
             columns={columns}
-            // style={{ border: "1px solid black" }}
-            className="custome-table"
+            className="card"
+            pagination={{pageSize:3}}
           ></Table>
         </div>
       </div>

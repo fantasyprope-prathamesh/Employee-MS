@@ -88,7 +88,7 @@ const UpdateRequest = () => {
 
   return (
     <>
-      <div className="container w-50 mt-5 border">
+      <div className="container w-50 mt-5 border" style={{backgroundColor:"#f2f2f2" }}>
         {/* heading */}
         <div className="px-3 text-center">
           <h3>Fill Data For Update</h3>

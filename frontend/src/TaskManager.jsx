@@ -6,6 +6,7 @@ import "./style.css";
 import { Row, Col, Typography, Button, Input, Table, Select } from "antd";
 import "./allcss/TaskManagementCss.css";
 import TextArea from "antd/es/input/TextArea";
+import "./allcss/task.css"
 
 const TaskManager = () => {
   const { id } = useParams();
@@ -69,28 +70,28 @@ const TaskManager = () => {
 
   const columns = [
     {
-      title: "Task Description",
+      title: <span className="table-header">Task Description</span>,
       dataIndex: "task_description",
       render: (text, record) => {
-        return <div style={{ maxWidth: "10rem" }}>{text}</div>;
+        return <div style={{ maxWidth: "10rem" }} className="row-css">{text}</div>;
       },
     },
     {
-      title: "Due Date",
+      title: <span className="table-header">Due Date</span>,
       dataIndex: "due_date",
       render: (text, record) => {
-        return <div>{text}</div>;
+        return <div className="row-css">{text}</div>;
       },
     },
     {
-      title: "status",
+      title: <span className="table-header">Status</span>,
       dataIndex: "status",
       render: (text, record) => {
-        return <div>{text}</div>;
+        return <div className="row-css">{text}</div>;
       },
     },
     {
-      title: "Change Status",
+      title: <span className="table-header">Change Status</span>,
       // dataIndex: "task_description",
       render: (text, record) => {
         return (
@@ -125,12 +126,14 @@ const TaskManager = () => {
   return (
     <>
       Task List..
-      <div className="container border border-1 " style={{ maxWidth: "80%" }}>
+      <div className="container card" style={{ maxWidth: "80%" }}>
         {myTasks && (
           <Table
             dataSource={myTasks}
             columns={columns}
-            //   style={{maxWidth:"65%"}}
+            //   style={{maxWidth:"65%"}}\
+            className=""
+            pagination={{pageSize:4}}
           ></Table>
         )}
       </div>

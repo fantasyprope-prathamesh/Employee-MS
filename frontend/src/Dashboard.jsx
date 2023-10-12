@@ -150,9 +150,18 @@ const Dashboard = () => {
             {/* right portion area */}
 
             <div className="col p-0 m-0  ">
-              <div className="border p-2 d-flex justify-content-center shadow">
+              <div className="border p-2  shadow"
+              style={{
+            display: "flex",
+            justifyContent: "center",
+            color: "#0055ff",
+            fontSize: "1.5rem",
+            fontWeight: "500",
+          }}
+              >
                 <h4>Employee Management System</h4>
               </div>
+              
 
               <Outlet />
             </div>

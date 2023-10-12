@@ -110,19 +110,19 @@ const AssignNewTask = () => {
   return (
     <>
       <div
-        className="container p-3 mt-5 border border-1"
-        style={{ width: "50%" }}
+        className="card container p-3 mt-5 border border-1"
+        style={{ width: "50%" , backgroundColor:"#f2f2f2" }}
       >
         {/* Leave Type */}
 
         <Row>
           <Col span={12}>
-            <Title level={4}>Employee :</Title>
+            <Title level={4} style={{color:"#0066ff"}}>Employee :</Title>
           </Col>
           <Col span={12}>
             <Select
               placeholder="Select Employee"
-              style={{ width: "max-content" }}
+              style={{ width: "15rem" }}
               onChange={handleSelectedOption}
               // value={selectedOption}
               // labelInValue
@@ -155,7 +155,7 @@ const AssignNewTask = () => {
         </Row> */}
         <Row>
           <Col span={12}>
-            <Title level={4}>Description :</Title>
+            <Title level={4} style={{color:"#0066ff"}}>Description :</Title>
           </Col>
           <Col span={12}>
             <TextArea
@@ -173,7 +173,7 @@ const AssignNewTask = () => {
         {/* Due Date -----------------------------------------------------------*/}
         <Row>
           <Col span={12}>
-            <Title level={4}>Due Date :</Title>
+            <Title level={4} style={{color:"#0066ff"}}>Due Date :</Title>
           </Col>
           <Col span={12}>
             <Input
@@ -193,7 +193,7 @@ const AssignNewTask = () => {
         {/* End Date */}
         <Row>
           <Col span={12}>
-            <Title level={4}>Priority :</Title>
+            <Title level={4} style={{color:"#0066ff"}}>Priority :</Title>
           </Col>
           <Col span={12}>
             <Select

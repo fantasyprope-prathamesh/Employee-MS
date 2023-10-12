@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./style.css";
+import "./allcss/task.css"
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -63,7 +64,7 @@ const Dashboard = () => {
   return (
     <>
       <div className="container ">
-        <div className="py-2 text-center">
+        <div className="py-3 text-center" style={{ color: "#8533ff" }}>
           <h4>Employee List</h4>
         </div>
         <div className="">
@@ -78,16 +79,46 @@ const Dashboard = () => {
           </Link>
 
           {/* employee records  */}
-          <div className="mt-3">
-            <table className="table">
+          <div className="mt-3 rounded-5">
+            <table className="table ">
               <thead>
                 <tr>
-                  <th>name</th>
-                  <th>image</th>
-                  <th>email</th>
-                  <th>address</th>
-                  <th>salary</th>
-                  <th>action</th>
+                  <th
+                    className="employee-table-heading"
+                    style={{ color: "#8533ff" }}
+                  >
+                    Name
+                  </th>
+                  <th
+                    className="employee-table-heading"
+                    style={{ color: "#8533ff" }}
+                  >
+                    Image
+                  </th>
+                  <th
+                    className="employee-table-heading"
+                    style={{ color: "#8533ff" }}
+                  >
+                    Email
+                  </th>
+                  <th
+                    className="employee-table-heading"
+                    style={{ color: "#8533ff" }}
+                  >
+                    Address
+                  </th>
+                  <th
+                    className="employee-table-heading"
+                    style={{ color: "#8533ff" }}
+                  >
+                    Salary
+                  </th>
+                  <th
+                    className="employee-table-heading"
+                    style={{ color: "#8533ff" }}
+                  >
+                    Action
+                  </th>
                 </tr>
               </thead>
 
@@ -99,7 +130,7 @@ const Dashboard = () => {
                   return (
                     <>
                       <tr key={id}>
-                        <td>{name}</td>
+                        <td >{name}</td>
                         <td>
                           <img
                             src={`http://localhost:8081/images/${image}`}

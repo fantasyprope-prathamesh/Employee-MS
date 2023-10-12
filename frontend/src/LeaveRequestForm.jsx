@@ -49,14 +49,14 @@ const LeaveRequestForm = () => {
     <>
       <p>id : {id}</p>
       <div
-        className="container p-3 mt-5 border border-1"
-        style={{ width: "50%" }}
+        className="container p-4 mt-5 border border-1 card"
+        style={{ width: "50%" , backgroundColor:"#f2f2f2" }}
       >
         {/* Leave Type */}
 
         <Row>
           <Col span={12}>
-            <Title level={4}>Leave Type :</Title>
+            <Title level={4} style={{color:"#0066ff"}}>Leave Type :</Title>
           </Col>
           <Col span={12}>
             <Input
@@ -76,7 +76,7 @@ const LeaveRequestForm = () => {
         {/* Start Date */}
         <Row>
           <Col span={12}>
-            <Title level={4}>Start Date :</Title>
+            <Title level={4} style={{color:"#0066ff"}}>Start Date :</Title>
           </Col>
           <Col span={12}>
             <Input placeholder="dd/mm/yyyy"
@@ -94,7 +94,7 @@ const LeaveRequestForm = () => {
         {/* End Date */}
         <Row>
           <Col span={12}>
-            <Title level={4}>End Date :</Title>
+            <Title level={4} style={{color:"#0066ff"}}>End Date :</Title>
           </Col>
           <Col span={12}>
             <Input placeholder="dd/mm/yyyy"
@@ -111,7 +111,7 @@ const LeaveRequestForm = () => {
         <br></br>
         {/* Reason */}
         <Row>
-          <Title level={4}>Reason :</Title>
+          <Title level={4} style={{color:"#0066ff"}}>Reason :</Title>
         </Row>
         <Row>
           <Col span={24}>

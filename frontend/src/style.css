@@ -72,3 +72,11 @@
 .left-radius{
     border-radius: 450px 0px 0px 450px;
 }
+
+/* //--------------------------------- */
+
+.employee-table-heading{
+    font-size: 1.3rem;
+    color: rgb(77, 77, 235);
+    text-align: center;
+}

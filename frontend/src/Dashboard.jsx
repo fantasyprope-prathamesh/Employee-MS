@@ -122,7 +122,7 @@ const Dashboard = () => {
 
 
                   {/*Profile  -----------------------------------------------------*/}
-                  <li>
+                  {/* <li>
                     <Link
                       to={"/profile"}
                       className="nav-link px-0 align-middle"
@@ -130,7 +130,7 @@ const Dashboard = () => {
                       <i className="fs-4 bi-person"></i>{" "}
                       <span className="ms-1 d-none d-sm-inline">Profile</span>
                     </Link>
-                  </li>
+                  </li> */}
 
                   {/*  */}
                   <li>

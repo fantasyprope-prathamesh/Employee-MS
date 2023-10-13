@@ -125,8 +125,8 @@ const TaskManager = () => {
   //-------------------------------------------------------------------------------
   return (
     <>
-      Task List..
-      <div className="container card" style={{ maxWidth: "80%" }}>
+
+      <div className="container card mt-4" style={{ maxWidth: "80%" }}>
         {myTasks && (
           <Table
             dataSource={myTasks}

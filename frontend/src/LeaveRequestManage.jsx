@@ -160,7 +160,7 @@ const LeaveRequestManage = () => {
 
   return (
     <>
-      This is leave management
+
       <div>
         <div className="container p-md-3 ">
           {loading ? (

@@ -80,3 +80,134 @@
     color: rgb(77, 77, 235);
     text-align: center;
 }
+
+/* //================================================= */
+
+/* landing page design */
+/* Start.css */
+/* Start.css */
+
+.landing-container {
+    position: relative;
+    overflow: hidden;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    text-align: center;
+    color: #fff;
+  }
+  
+  .background-shape {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top right, #3498db 20%, #1a1a1a 80%);
+    /* clip-path: ellipse(80% 50% at 50% 0%); */
+    /* z-index: -1; */
+    opacity: 0.5;
+  }
+  
+  .content {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .logo {
+    font-size: 3em;
+    font-weight: bold;
+    color: #0188e2;
+    margin-bottom: 10px;
+  }
+  
+  .tagline {
+    color: #777;
+    font-size: 1.2em;
+  }
+  
+  .login-section {
+    margin-top: 30px;
+  }
+  
+  .login-heading {
+    color: #0188e2;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .login-button {
+    display: inline-block;
+    padding: 15px 30px;
+    margin: 0 15px;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .employee-button {
+    background-color: #0188e2;
+  }
+  
+  .admin-button {
+    background-color: #e74c3c;
+  }
+  
+  .features-section {
+    text-align: center;
+    margin-top: 30px;
+  }
+  
+  .features-heading {
+    color: #0188e2;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+  }
+  
+  .feature-list-container {
+    /* background-color: rgba(255, 255, 255, 0.459); */
+    background: radial-gradient(circle at top right, #3498db 20%, #1a1a1a 80%);
+    opacity: 0.9;
+    border-radius: 15px;
+    padding: 20px;
+  }
+  
+  .feature-list {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+  }
+  
+  .feature-list li {
+    margin-bottom: 15px;
+  }
+  
+  .footer {
+    margin-top: 30px;
+  }
+  
+  .ready-text {
+    font-size: 1.2em;
+  }
+  
+  .signup-link {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.5em;
+    border-bottom: 2px solid #3498db;
+    transition: color 0.3s ease, border-bottom-color 0.3s ease;
+  }
+  
+  .signup-link:hover {
+    color: #1a1a1a;
+    border-bottom-color: #1a1a1a;
+  }
+  

@@ -2,10 +2,42 @@ import React, { useEffect, useState } from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./style.css";
 import "./allcss/task.css"
-import { Link } from "react-router-dom";
+import { Link , Outlet, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  //Cookie authentication based on Role - Admin or Employee
+  axios.defaults.withCredentials = true;
+  
+  useEffect(() => {
+    console.log("Yeaapppppp")
+    axios
+      .get("http://localhost:8081/dashboard")
+      .then((response) => {
+        // navigate("/employeeDetail")
+        console.log("Immmmmmmmmm",response)
+        if (response.data.Status === "Successful") {
+          if (response.data.Role === "Employee") {
+            console.log("Employee heresss employee");
+            navigate("/start");
+          } else if (response.data.Role === "Admin") {
+            console.log("Admin here")
+            const id = response.data.id;
+            navigate("/employee");
+          }
+        } else if (response.data.Status == "Unsuccessful") {
+          navigate("/start");
+        }
+      })
+      .catch((err) => {
+        console.log("I got error here")
+        navigate("/start");
+
+      });
+  }, []);
+
+  //-------------------------------------------------------------------------------------
   // custome hover effect for btn..
   const [isHover, setIsHover] = useState(false);
 

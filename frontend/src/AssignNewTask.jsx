@@ -12,9 +12,47 @@ const { Option } = Select;
 
 const AssignNewTask = () => {
   //----------------------------------------------------------------------------
+  const navigate = useNavigate();
+  
   //States..
   const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState("");
+  //----------------------------------------------------------------------------
+     //------------------------------------------------------------------
+  //----------------------------------------------------------------
+  //Cookie authentication based on Role - Admin or Employee
+  axios.defaults.withCredentials = true;
+  
+  useEffect(() => {
+    console.log("Yeaapppppp")
+    axios
+      .get("http://localhost:8081/dashboard")
+      .then((response) => {
+        // navigate("/employeeDetail")
+        console.log("Immmmmmmmmm",response)
+        if (response.data.Status === "Successful") {
+          if (response.data.Role === "Employee") {
+            console.log("Employee heresss employee");
+            navigate("/start");
+          } else if (response.data.Role === "Admin") {
+            console.log("Admin here")
+            const id = response.data.id;
+            navigate("/editEmployee/:empId");
+          }
+        } else if (response.data.Status == "Unsuccessful") {
+          navigate("/start");
+        }
+      })
+      .catch((err) => {
+        console.log("I got error here")
+        navigate("/start");
+
+      });
+  }, []);
+
+  //------------------------------------------------------------------
+
+  
 
   const [taskInfo, setTaskInfo] = useState({
     empId: "",

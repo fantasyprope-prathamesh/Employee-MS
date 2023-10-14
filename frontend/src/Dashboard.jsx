@@ -22,7 +22,7 @@ const Dashboard = () => {
           } else if (response.data.Role === "Employee") {
             // console.log("Immmmmmmmmm")
             const id = response.data.id;
-            navigate("/employeeDetail/" + id);
+            // navigate("/employeeDetail/" + id);
           }
         } else if (response.data.Result == "Unsuccessful") {
           navigate("/start");
@@ -162,8 +162,10 @@ const Dashboard = () => {
                 <h4>Employee Management System</h4>
               </div>
               
-
+              {/* Outlet here */}
               <Outlet />
+
+
             </div>
           </div>
         </div>

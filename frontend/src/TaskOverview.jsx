@@ -14,6 +14,40 @@ const TaskOverView = () => {
   const [taskData, setTaskData] = useState([]);
   const navigate = useNavigate();
   //---------------------------------------------------------------------------------
+   //------------------------------------------------------------------
+  //----------------------------------------------------------------
+  //Cookie authentication based on Role - Admin or Employee
+  axios.defaults.withCredentials = true;
+  
+  useEffect(() => {
+    console.log("Yeaapppppp")
+    axios
+      .get("http://localhost:8081/dashboard")
+      .then((response) => {
+        // navigate("/employeeDetail")
+        console.log("Immmmmmmmmm",response)
+        if (response.data.Status === "Successful") {
+          if (response.data.Role === "Employee") {
+            console.log("Employee heresss employee");
+            navigate("/start");
+          } else if (response.data.Role === "Admin") {
+            console.log("Admin here")
+            const id = response.data.id;
+            navigate("/editEmployee/:empId");
+          }
+        } else if (response.data.Status == "Unsuccessful") {
+          navigate("/start");
+        }
+      })
+      .catch((err) => {
+        console.log("I got error here")
+        navigate("/start");
+
+      });
+  }, []);
+
+  //------------------------------------------------------------------
+
   //----------------------------------------------------------------------------------
   //just printing....
   useEffect(() => {

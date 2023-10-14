@@ -9,6 +9,34 @@ const EmployeesProfiles = () => {
   const { id } = useParams();
   const [employee, setEmployee] = useState({});
 
+  //-----------------------------------------------------------------------------
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:8081/dashboard")
+  //     .then((response) => {
+  //       // navigate("/employeeDetail")
+  //       // console.log("Immmmmmmmmm")
+  //       if (response.data.Result == "Successful") {
+  //         if (response.data.Role === "Employee") {
+  //           console.log("Employee here");
+  //           // navigate(" ");
+  //         } else if (response.data.Role === "Admin") {
+  //           console.log("Admin here")
+  //           const id = response.data.id;
+  //           // navigate("/start");
+  //         }
+  //       } else if (response.data.Result == "Unsuccessful") {
+  //         // navigate("/start");
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log("I got error here")
+  //       navigate("/start");
+
+  //     });
+  // }, []);
+  //-----------------------------------------------------------------------------
+
   useEffect(() => {
     axios
       .get("http://localhost:8081/getCurrentEmployee/" + id)

@@ -91,10 +91,11 @@ app.post("/employeeLogin", (req, res) => {
         if (result2) {
           const token = jwt.sign(
             { Role: "Employee", id: result1[0].id },
-            "emp-key",
+            "key-id",
             { expiresIn: "1d" }
           );
-          res.cookie("empCookie", token);
+          res.cookie("Token", token);
+
           return res.json({ Result: "Successful", id: result1[0].id });
         } else {
           return res.json({
@@ -130,7 +131,8 @@ app.post("/login", (request, response) => {
       const token = jwt.sign({ Role: "Admin" }, "key-id", { expiresIn: "1d" });
 
       //..writing cookies and seding as a response..
-      response.cookie("token", token);
+      // response.cookie("token", token);
+      response.cookie("Token", token);
 
       return response.json({ Status: "Successful", Result: result });
     } else {
@@ -139,42 +141,84 @@ app.post("/login", (request, response) => {
     }
   });
 });
+//---------------------------------------------------------------------------------
 //request for checking jwt cookie authentication..------------------------
+
 const verifyUser = (req, res, next) => {
-  const token = req.cookies.token; // .token is a key word which we provided during creating cookies into the /login request check it
+  const token = req.cookies.Token;
 
   if (!token) {
+    console.log("No token");
     req.Status = "Unsuccessful";
-
-    next();
+    return res.json({ Status : "Unsuccessful" });
   } else {
     jwt.verify(token, "key-id", (error, decoded) => {
-      if (error) return res.json({ Error: "Not Authenticated" });
+      if (error) {
+        console.log("Token verification error:", error);
+        return res.json({ Status : "Unsuccessful" });
+      }
+      console.log("Verification Success")
 
-      // req.json({Status:"Successful"})
       req.Status = "Successful";
       req.role = decoded.Role;
       req.id = decoded.id;
 
-      // next(); //i think this next() call means /dashboard request function
+      // return res.json({Status : req.Status , Role : req.role})
+      next(); // Call next to proceed to the next middleware or route handler
     });
   }
 };
-app.get("/dashboard", verifyUser, (request, response) => {
-  // console.log(request.Status)
-  const result = request.Status;
-  // console.log(result);
 
-  console.log("role : " + req.role);
-  return response.json({ Result: result, Id: req.id, Role: req.role });
+app.get("/dashboard", verifyUser, (req, res) => {
+  console.log("Status: " + req.Status);
+  console.log("Role: " + req.role);
+
+  const result = req.Status;
+  const id = req.id;
+  const role = req.role;
+
+  return res.json({ Status: result, Id: id, Role: role });
 });
+
+
+// const verifyUser = (req, res, next) => {
+//   const token = req.cookies.Token; // .token is a key word which we provided during creating cookies into the /login request check it
+//   console.log("see token : " , token)
+
+//   if (!token) {
+//     console.log("Not token")
+//     req.Status = "Unsuccessful";
+
+//     // next();
+//   } else {
+//     console.log("token present:)")
+//     jwt.verify(token, "key-id", (error, decoded) => {
+//       if (error) return res.json({ Error: "Not Authenticated" });
+
+//       // req.json({Status:"Successful"})
+//       req.Status = "Successful";
+//       req.role = decoded.Role;
+//       req.id = decoded.id;
+
+//       // next(); //i think this next() call means /dashboard request function
+//     });
+//   }
+// };
+// app.get("/dashboard", verifyUser, (request, response) => {
+//   console.log(request.Status)
+//   const result = request.Status;
+//   // console.log(result);
+
+//   console.log("role : " + req.role);
+//   return response.json({ Result: result, Id: req.id, Role: req.role });
+// });
 
 //-----------------------------------------------------
 
 //logout with clearing cookie.
 
 app.get("/logout", (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("Token");
   return res.json({ Status: "Success" });
 });
 

@@ -1,12 +1,46 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 // import { Form, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./style.css";
 import axios from "axios";
 import { Button } from "antd";
+import {Link,useNavigate} from 'react-router-dom'
 
 const AddEmployee = () => {
+
+  //Cookie authentication based on Role - Admin or Employee
+  const navigate = useNavigate();
+  axios.defaults.withCredentials = true;
+  
+  useEffect(() => {
+    console.log("Yeaapppppp")
+    axios
+      .get("http://localhost:8081/dashboard")
+      .then((response) => {
+        // navigate("/employeeDetail")
+        console.log("Immmmmmmmmm",response)
+        if (response.data.Status === "Successful") {
+          if (response.data.Role === "Employee") {
+            console.log("Employee heresss employee");
+            navigate("/start");
+          } else if (response.data.Role === "Admin") {
+            console.log("Admin here")
+            const id = response.data.id;
+            navigate("/addEmployee");
+          }
+        } else if (response.data.Status == "Unsuccessful") {
+          navigate("/start");
+        }
+      })
+      .catch((err) => {
+        console.log("I got error here")
+        navigate("/start");
+
+      });
+  }, []);
+
+  //-----------------------------------------------------------------------
   //state for managing input fields..
   const [empInfo, setEmpInfo] = useState({
     name: "",

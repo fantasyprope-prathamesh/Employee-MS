@@ -1,0 +1,45 @@
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+function App() {
+  return (
+    <>
+      <BrowserRouter>
+        <Routes>
+          {/* Define a top-level route for Dashboard */}
+          <Route path="/dashboard/*" element={<Dashboard />}>
+            {/* Add a default route for the Dashboard */}
+            <Route index element={<Home />} />
+
+            {/* Nested routes for Dashboard */}
+            <Route path="employee" element={<Employee />} />
+            <Route path="addEmployee" element={<AddEmployee />} />
+            <Route path="editEmployee/:empId" element={<EditEmployee />} />
+            <Route path="leaverequestmanage" element={<LeaveRequestManage />} />
+            <Route path="taskoverview" element={<TaskOverView />} />
+            <Route path="assignnewtask" element={<AssignNewTask />} />
+          </Route>
+
+          {/* Other top-level routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/start" element={<Start />} />
+          <Route path="/employeeLogin" element={<EmployeeLogin />} />
+
+          {/* Define a nested route for EmployeeDetail */}
+          <Route path="/employeeDetail/:id" element={<EmployeeDetail />}>
+            {/* Add a default route for EmployeeDetail */}
+            <Route index element={<EmployeesProfiles />} />
+
+            {/* Nested routes for EmployeeDetail */}
+            <Route path="leaverequest" element={<LeaveRequestForm />} />
+            <Route path="updaterequest" element={<UpdateRequest />} />
+            <Route path="taskmanager" element={<TaskManager />} />
+          </Route>
+
+          {/* Add other top-level routes as needed */}
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
+}
+
+export default App;

@@ -5,6 +5,9 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "./style.css";
 
 const EmployeeDetail = () => {
+
+  axios.defaults.withCredentials = true;
+
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -21,6 +24,34 @@ const EmployeeDetail = () => {
       });
   };
   //------------------------------------------------------------------
+
+  //Cookie authentication based on Role - Admin or Employee
+  
+  useEffect(() => {
+    axios
+      .get("http://localhost:8081/dashboard")
+      .then((response) => {
+        // navigate("/employeeDetail")
+        console.log("Immmmmmmmmm",response)
+        if (response.data.Status === "Successful") {
+          if (response.data.Role === "Employee") {
+            console.log("Employee heresss");
+            navigate("");
+          } else if (response.data.Role === "Admin") {
+            console.log("Admin here")
+            const id = response.data.id;
+            navigate("/start");
+          }
+        } else if (response.data.Status == "Unsuccessful") {
+          navigate("/start");
+        }
+      })
+      .catch((err) => {
+        console.log("I got error here")
+        navigate("/start");
+
+      });
+  }, []);
 
   //-----------------------------------------------------------------
 

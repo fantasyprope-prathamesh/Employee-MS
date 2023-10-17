@@ -69,7 +69,7 @@ const EmployeeLogin = () => {
                               className="fas fa-cubes fa-2x me-3"
                               style={{ color: "#ff6219" }}
                             ></i>
-                            <span className="h1 fw-bold mb-0"> Login </span>
+                            <span className="h1 fw-bold mb-0">Employee Login </span>
                           </div>
 
                           {/* email inpout */}

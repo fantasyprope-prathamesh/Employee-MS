@@ -152,6 +152,7 @@ const verifyUser = (req, res, next) => {
     req.Status = "Unsuccessful";
     return res.json({ Status : "Unsuccessful" });
   } else {
+    
     jwt.verify(token, "key-id", (error, decoded) => {
       if (error) {
         console.log("Token verification error:", error);

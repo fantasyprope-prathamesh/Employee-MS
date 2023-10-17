@@ -26,7 +26,7 @@ function App() {
           <Route path="/" element={<Dashboard />}>
             <Route path="" element={<Home />}></Route>
             <Route path="/employee" element={<Employee />}></Route>
-            <Route path="/profile" element={<Profile />}></Route>
+            {/* <Route path="/profile" element={<Profile />}></Route> */}
             <Route path="/addEmployee" element={<AddEmployee />}></Route>
             <Route path="/editEmployee/:empId" element={<EditEmployee />} />
             <Route path="/leaverequestmanage" element={<LeaveRequestManage/>}/>

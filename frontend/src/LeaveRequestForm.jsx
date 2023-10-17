@@ -47,7 +47,7 @@ const LeaveRequestForm = () => {
   //-------------------------------------------------------------------------------------
   return (
     <>
-      <p>id : {id}</p>
+      {/* <p>id : {id}</p> */}
       <div
         className="container p-4 mt-5 border border-1 card"
         style={{ width: "50%" , backgroundColor:"#f2f2f2" }}

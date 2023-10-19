@@ -92,7 +92,7 @@ const TaskOverView = () => {
       title: <span className="table-header">Due Date</span>,
       dataIndex: "due_date",
       render: (text, record) => {
-        return <div className="row-css">{text}</div>;
+        return <div className="row-css "style={{backgroundColor:record.rowColor }}>{text}</div>;
       },
     },
     {
@@ -126,7 +126,20 @@ const TaskOverView = () => {
         if (res.data) {
           console.log("Task data got it!");
           // console.log(res.data);
-          setTaskData(res.data);
+
+          const updatedTasks = res.data?.map((task)=>{
+            const [day,month,year] = task.due_date.split('/');
+            let jmonth = parseInt(month,10) - 1;
+
+            const newDate = new Date(year,jmonth,day);
+
+            return {
+              ...task,
+              rowColor : ((newDate < new Date()) && (task.status === "Not Started" || task.status === "In Progress"))? 'red' : 'transparent' ,
+            
+            }
+          })
+          setTaskData(updatedTasks);
           setLoading(false);
         } else {
           console.log("No data found!!");

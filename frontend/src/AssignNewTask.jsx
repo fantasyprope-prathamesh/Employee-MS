@@ -58,7 +58,7 @@ const AssignNewTask = () => {
     empId: "",
     taskDescription: "",
     dueDate: "",
-    status: "--",
+    status: "Not Started",
     priority: "",
   });
 

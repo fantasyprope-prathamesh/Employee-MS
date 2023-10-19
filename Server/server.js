@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken";
 import multer from "multer";
 import path from "path";
 import { error } from "console";
+import schedule from 'node-schedule'
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -599,6 +600,58 @@ app.put("/updateTaskStatus/:id",(req,res)=>{
 })
 
 //---------------------------------------------------------------------------------
+let empDatas = [];
+
+//due date timmer using cron..
+
+const job = schedule.scheduleJob('*/1 * * * *', async () => {
+  const currentDate = new Date();
+
+  try {
+    const query = 'SELECT * FROM taskinfo WHERE STR_TO_DATE(due_date, "%d/%m/%Y") < ? && (status = ? || status = ?)';
+    con.query(query, [currentDate,"In Progress","Not Started"], (error, results) => {
+      if (error) {
+        console.error('Error querying tasks:', error);
+        return;
+      }
+
+      let tempObj = {
+        emp_id : "",
+        task_description : "",
+        due_date : "",
+        status : "",
+        priority : ""
+      }
+
+      empDatas = [];
+
+      results.forEach(task => {
+        tempObj = {
+          ...tempObj,
+          emp_id : task.emp_id,
+          task_description : task.task_description,
+          due_date : task.due_date,
+          status : task.status,
+          priority : task.priority,
+        }
+
+        empDatas.push(tempObj);
+
+        console.log(`Task '${task.task_description}' is overdue for ${task.due_date}`);
+        
+        // Implement your notification logic here
+      });
+
+      console.log(empDatas)
+
+    });
+  } catch (error) {
+    console.error('Error checking due dates:', error);
+  }
+});
+
+
+//-----------------------------------------------------------------------------------
 //start server..
 
 app.listen(8081, () => {

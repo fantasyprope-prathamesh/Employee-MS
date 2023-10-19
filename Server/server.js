@@ -7,11 +7,10 @@ import jwt from "jsonwebtoken";
 import multer from "multer";
 import path from "path";
 import { error } from "console";
-import schedule from 'node-schedule'
+import schedule from "node-schedule";
 
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
-
 
 // const mysql = require("mysql");
 import nodemailer from "nodemailer";
@@ -37,11 +36,10 @@ app.use(bodyParser.json());
 
 //--------------------------------------------------------
 // Apis imports ..
-import FetchTasks from "./Apis/FetchTasks.js"
+import FetchTasks from "./Apis/FetchTasks.js";
 import AssignTask from "./Apis/AssignTask.js";
 import MyTasks from "./Apis/MyTasks.js";
 import UpdateTaskStatus from "./Apis/UpdateTaskStatus.js";
-
 
 //----------------------------------------------
 //creating connection..
@@ -151,15 +149,14 @@ const verifyUser = (req, res, next) => {
   if (!token) {
     console.log("No token");
     req.Status = "Unsuccessful";
-    return res.json({ Status : "Unsuccessful" });
+    return res.json({ Status: "Unsuccessful" });
   } else {
-    
     jwt.verify(token, "key-id", (error, decoded) => {
       if (error) {
         console.log("Token verification error:", error);
-        return res.json({ Status : "Unsuccessful" });
+        return res.json({ Status: "Unsuccessful" });
       }
-      console.log("Verification Success")
+      console.log("Verification Success");
 
       req.Status = "Successful";
       req.role = decoded.Role;
@@ -181,7 +178,6 @@ app.get("/dashboard", verifyUser, (req, res) => {
 
   return res.json({ Status: result, Id: id, Role: role });
 });
-
 
 // const verifyUser = (req, res, next) => {
 //   const token = req.cookies.Token; // .token is a key word which we provided during creating cookies into the /login request check it
@@ -259,7 +255,7 @@ app.get("/getEmployees", (request, response) => {
   con.query(sql, (err, result) => {
     if (err) return response.json({ Error: "Error during select operation" });
 
-    console.log("empooo data : ", result)
+    console.log("empooo data : ", result);
     return response.json({ Status: "Success", Result: result });
   });
 });
@@ -291,6 +287,7 @@ app.get("/getCurrentEmployee/:id", (request, response) => {
 // updateCurrentEmployee
 
 app.put("/updateCurrentEmployee/:empId", upload.single("image"), (req, res) => {
+  console.log("Updating....");
   const Id = req.params.empId;
 
   const values = [
@@ -303,8 +300,9 @@ app.put("/updateCurrentEmployee/:empId", upload.single("image"), (req, res) => {
 
   // console.log(req.body.name);
 
-  const sql = "UPDATE employee SET name = ?,email = ?,address = ?,salary = ?,image = COALESCE(NULLIF(?, NULL), image) WHERE id = ?";
-    // "update employee set name = ? , email = ? , address = ? , salary = ? , image = COALESCE(NULIF(?,'),image) where id = ?";
+  const sql =
+    "UPDATE employee SET name = ?,email = ?,address = ?,salary = ?,image = COALESCE(NULLIF(?, NULL), image) WHERE id = ?";
+  // "update employee set name = ? , email = ? , address = ? , salary = ? , image = COALESCE(NULIF(?,'),image) where id = ?";
 
   if (values) {
     con.query(sql, [...values, Id], (err, result) => {
@@ -320,18 +318,46 @@ app.put("/updateCurrentEmployee/:empId", upload.single("image"), (req, res) => {
 
 //Delete current employee..
 
-app.delete("/deleteCurrentEmployee/:id", (request, response) => {
+app.post("/deleteCurrentEmployee/:id", (request, response) => {
+  console.log("going to delete>....");
   const Id = request.params.id;
 
-  console.log(Id);
+  const deleteTasksQuery = "DELETE FROM taskinfo WHERE emp_id = ?";
+  con.query(deleteTasksQuery, [Id], (err, taskResult) => {
+    if (err) {
+      console.error("Error deleting tasks:", err);
+      return response.json({ Status: "Error during deletion!!" });
+    }
 
-  const sql = "delete from employee where id = ?";
+    const deleteEmployeeQuery = "DELETE FROM employee WHERE id = ?";
+    con.query(deleteEmployeeQuery, [Id], (err, result) => {
+      if (err) {
+        console.error("Error deleting employee:", err);
+        return response.json({ Status: "Error during deletion!!" });
+      }
 
-  con.query(sql, [Id], (err, result) => {
-    if (err) return response.json({ Status: "Erro during deletion!!" });
-
-    return response.json({ Status: "Success" });
+      return response.json({ Status: "Success" });
+    });
   });
+
+  // console.log(Id);
+
+  // const sql = "delete from employee where id = ?";
+
+  // con.query(sql, [Id], (err, result) => {
+  //   // console.log("inside query..")
+  //   // if (err) return response.json({ Status: "Erro during deletion!!" });
+  //   if(err){
+  //     console.log(err);
+  //   }
+
+  //   if(result){
+  //     console.log("deleeeeet")
+  //   }else{
+  //     console.log("not affected")
+  //   }
+  //   return response.json({ Status: "Success" });
+  // });
 });
 
 //-============================================================================================
@@ -389,7 +415,7 @@ app.put("/sendEmail", upload.none(), (req, res) => {
     service: "gmail",
     auth: {
       user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_PASS
+      pass: process.env.GMAIL_PASS,
     },
   });
 
@@ -426,128 +452,136 @@ app.get("/getAdmins", (req, res) => {
 });
 
 //----------------------------------------------------------------------------------------------
-  //Storing leave information into db..
-  app.post("/leaveRequest/:id", (req, res) => {
-    // Check if request has a body
-    if (req.body) {
-      const sql1 = "SELECT name, email FROM employee WHERE id = ?";
-      con.query(sql1, [req.params.id], (err, result1) => {
-        if (err) {
-          console.log("Error during query execution:", err);
-          res.status(500).send("Internal Server Error");
+//Storing leave information into db..
+app.post("/leaveRequest/:id", (req, res) => {
+  // Check if request has a body
+  if (req.body) {
+    const sql1 = "SELECT name, email FROM employee WHERE id = ?";
+    con.query(sql1, [req.params.id], (err, result1) => {
+      if (err) {
+        console.log("Error during query execution:", err);
+        res.status(500).send("Internal Server Error");
+      } else {
+        if (result1.length > 0) {
+          const { name, email } = result1[0];
+
+          const sql2 =
+            "INSERT INTO leaveinfo(empName, leaveType, startDate, endDate, reason, status) VALUES (?, ?, ?, ?, ?, ?)";
+          const values = [
+            name,
+            req.body.leaveType,
+            req.body.startDate,
+            req.body.endDate,
+            req.body.reason,
+            req.body.status,
+          ];
+
+          con.query(sql2, values, (err2, result2) => {
+            if (err2) {
+              console.log(
+                "Something went wrong during the second insert query:",
+                err2
+              );
+              res.status(500).send("Internal Server Error");
+            } else {
+              console.log("Data inserted successfully :)");
+              // return res.json({Status : "Successfully inserted emp"})
+              res.status(200).send("Leave request submitted successfully");
+            }
+          });
         } else {
-          if (result1.length > 0) {
-            const { name, email } = result1[0];
-  
-            const sql2 =
-              "INSERT INTO leaveinfo(empName, leaveType, startDate, endDate, reason, status) VALUES (?, ?, ?, ?, ?, ?)";
-            const values = [name, req.body.leaveType, req.body.startDate, req.body.endDate, req.body.reason, req.body.status];
-  
-            con.query(sql2, values, (err2, result2) => {
-              if (err2) {
-                console.log("Something went wrong during the second insert query:", err2);
-                res.status(500).send("Internal Server Error");
-              } else {
-                console.log("Data inserted successfully :)");
-                // return res.json({Status : "Successfully inserted emp"})
-                res.status(200).send("Leave request submitted successfully");
-              }
-            });
-          } else {
-            console.log("No employee data found for the given ID");
-            res.status(404).send("Employee not found");
-          }
+          console.log("No employee data found for the given ID");
+          res.status(404).send("Employee not found");
         }
-      });
-    } else {
-      console.log("No data in the request body");
-      res.status(400).send("Bad Request");
-    }
-  });
-  
+      }
+    });
+  } else {
+    console.log("No data in the request body");
+    res.status(400).send("Bad Request");
+  }
+});
+
 //------------------------------------------------------------------------------------------------
 // fetching data from leaveinfo table..
 
-  app.get("/fetchLeaveData" , (req,res)=>{
-    const sql = "select id, empName,leaveType,startDate,endDate,reason,status from leaveinfo";
+app.get("/fetchLeaveData", (req, res) => {
+  const sql =
+    "select id, empName,leaveType,startDate,endDate,reason,status from leaveinfo";
 
-    con.query(sql,(err,result)=>{
-      if(err){
-
-        console.log("Error during query")
-        res.status(500).send("Error during query")
-      }else if(result.length > 0){
-        console.log("Data fetch successfullly");
-        return res.json(result)
-      }else{
-        console.log("No data found")
-        res.status(404).send("No data fround!!")
-      }
-    })
-  })
+  con.query(sql, (err, result) => {
+    if (err) {
+      console.log("Error during query");
+      res.status(500).send("Error during query");
+    } else if (result.length > 0) {
+      console.log("Data fetch successfullly");
+      return res.json(result);
+    } else {
+      console.log("No data found");
+      res.status(404).send("No data fround!!");
+    }
+  });
+});
 
 //----------------------------------------------------------------------------------------------
 //handle Status of leave
 
-app.post("/handleStatus" , (req,res)=>{
-  console.log(req.body.id,req.body.status);
+app.post("/handleStatus", (req, res) => {
+  console.log(req.body.id, req.body.status);
   const id = req.body.id;
   let status = "";
-  if(req.body.status === "yes"){
+  if (req.body.status === "yes") {
     status = "Approved";
-    console.log(status,id)
-  }else if(req.body.status === "no"){
+    console.log(status, id);
+  } else if (req.body.status === "no") {
     status = "Rejected";
-  }else{
+  } else {
     status = "Pending";
   }
 
   const sql = "update leaveinfo set status = ? where id = ?";
-  con.query(sql,[status,id],(err,result)=>{
-    console.log("inside querryy")
-    if(err){
+  con.query(sql, [status, id], (err, result) => {
+    console.log("inside querryy");
+    if (err) {
       res.status(500).send("Error during query..");
+    } else if (result.affectedRows > 0) {
+      console.log("Status changed successfully");
+      res.status(200).send("success");
     }
-    else if(result.affectedRows > 0){
-      console.log("Status changed successfully")
-      res.status(200).send("success")
-    }
-  })
-
-})
+  });
+});
 //------------------------------------------------------------------------------------------------
 //Manage Leave email..
-app.post("/handleLeaveEmail",(req,res)=>{
-  console.log("here i am>:",req.body)
+app.post("/handleLeaveEmail", (req, res) => {
+  console.log("here i am>:", req.body);
 
   //hr finding...
   let admin = "";
   const sql = "select name from users where action = ?";
-  con.query(sql,["hr"],(err,result)=>{
-    if(err){
-      res.status(500).send("Erro during query..")
-    }else if(result){
-      admin = result[0].name
-      console.log('admin',result[0].name)
+  con.query(sql, ["hr"], (err, result) => {
+    if (err) {
+      res.status(500).send("Erro during query..");
+    } else if (result) {
+      admin = result[0].name;
+      console.log("admin", result[0].name);
     }
 
     // console.log('admin',result.body)
-  })
+  });
 
   const values = {
     name: req.body.empName,
     type: req.body.leaveType,
     start: req.body.startDate,
     end: req.body.endDate,
-    admin : admin,
-    status : req.body.status,
+    admin: admin,
+    status: req.body.status,
   };
 
   let mailTransporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
       user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_PASS
+      pass: process.env.GMAIL_PASS,
     },
   });
 
@@ -575,81 +609,86 @@ app.post("/handleLeaveEmail",(req,res)=>{
       return res.json({ status: "success" });
     }
   });
-})
+});
 
 //----------------------------------------------------------------------------------------------
-  app.get("/fetchTasksData",(req,res)=>{
-    FetchTasks(req,res,con);
-  })
+app.get("/fetchTasksData", (req, res) => {
+  FetchTasks(req, res, con);
+});
 //-----------------------------------------------------------------------------------------------
 //add tasks..
 
-app.post("/assignTask",(req,res)=>{
-  AssignTask(req,res,con);
-})  
+app.post("/assignTask", (req, res) => {
+  AssignTask(req, res, con);
+});
 
 //------------------------------------------------------------------------------
 //my tasks..
-app.get("/myTasks/:id",(req,res)=>{
-  MyTasks(req,res,con)
-})
+app.get("/myTasks/:id", (req, res) => {
+  MyTasks(req, res, con);
+});
 
 //---------------------------------------------------------------------------------------
-app.put("/updateTaskStatus/:id",(req,res)=>{
-  UpdateTaskStatus(req,res,con);
-})
+app.put("/updateTaskStatus/:id", (req, res) => {
+  UpdateTaskStatus(req, res, con);
+});
 
 //---------------------------------------------------------------------------------
 let empDatas = [];
 
 //due date timmer using cron..
 
-const job = schedule.scheduleJob('*/1 * * * *', async () => {
+const job = schedule.scheduleJob("*/1 * * * *", async () => {
   const currentDate = new Date();
 
   try {
-    const query = 'SELECT * FROM taskinfo WHERE STR_TO_DATE(due_date, "%d/%m/%Y") < ? && (status = ? || status = ?)';
-    con.query(query, [currentDate,"In Progress","Not Started"], (error, results) => {
-      if (error) {
-        console.error('Error querying tasks:', error);
-        return;
-      }
-
-      let tempObj = {
-        emp_id : "",
-        task_description : "",
-        due_date : "",
-        status : "",
-        priority : ""
-      }
-
-      empDatas = [];
-
-      results.forEach(task => {
-        tempObj = {
-          ...tempObj,
-          emp_id : task.emp_id,
-          task_description : task.task_description,
-          due_date : task.due_date,
-          status : task.status,
-          priority : task.priority,
+    const query =
+      'SELECT * FROM taskinfo WHERE STR_TO_DATE(due_date, "%d/%m/%Y") < ? && (status = ? || status = ?)';
+    con.query(
+      query,
+      [currentDate, "In Progress", "Not Started"],
+      (error, results) => {
+        if (error) {
+          console.error("Error querying tasks:", error);
+          return;
         }
 
-        empDatas.push(tempObj);
+        let tempObj = {
+          emp_id: "",
+          task_description: "",
+          due_date: "",
+          status: "",
+          priority: "",
+        };
 
-        console.log(`Task '${task.task_description}' is overdue for ${task.due_date}`);
-        
-        // Implement your notification logic here
-      });
+        empDatas = [];
 
-      console.log(empDatas)
+        results.forEach((task) => {
+          tempObj = {
+            ...tempObj,
+            emp_id: task.emp_id,
+            task_description: task.task_description,
+            due_date: task.due_date,
+            status: task.status,
+            priority: task.priority,
+          };
 
-    });
+          empDatas.push(tempObj);
+
+          console.log(
+            `Task '${task.task_description}' is overdue for ${task.due_date}`
+          );
+
+          // Implement your notification logic here
+        });
+
+        console.log(empDatas);
+      }
+    );
   } catch (error) {
-    console.error('Error checking due dates:', error);
+    console.error("Error checking due dates:", error);
   }
 });
-
 
 //-----------------------------------------------------------------------------------
 //start server..

@@ -22,7 +22,10 @@ const Dashboard = () => {
           } else if (response.data.Role === "Employee") {
             // console.log("Immmmmmmmmm")
             const id = response.data.id;
-            // navigate("/employeeDetail/" + id);
+            navigate("/employeeDetail/" + id);
+          }
+          else{
+            navigate("/start")
           }
         } else if (response.data.Result == "Unsuccessful") {
           navigate("/start");

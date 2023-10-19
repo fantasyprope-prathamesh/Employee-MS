@@ -25,7 +25,7 @@ const EditEmployee = () => {
           } else if (response.data.Role === "Admin") {
             console.log("Admin here")
             const id = response.data.id;
-            navigate("/editEmployee/:empId");
+            navigate(`/editEmployee/${empId}`);
           }
         } else if (response.data.Status == "Unsuccessful") {
           navigate("/start");

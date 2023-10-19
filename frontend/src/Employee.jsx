@@ -77,9 +77,9 @@ const Dashboard = () => {
   //-----------------------------------------------------------------
 
   //handling delete operation..
-  const handleDelete = (id) => {
+  const handleDelete = (idd) => {
     axios
-      .delete(`http://localhost:8081/deleteCurrentEmployee/${id}`)
+      .post(`http://localhost:8081/deleteCurrentEmployee/${idd}`)
       .then((response) => {
         if (response.data.Status == "Success") {
           window.location.reload(true);

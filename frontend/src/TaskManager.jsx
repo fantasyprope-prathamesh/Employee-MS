@@ -52,10 +52,11 @@ const TaskManager = () => {
     axios.put(`http://localhost:8081/updateTaskStatus/${id}`,codes)
     .then((res)=>{
         if(res){
-            console.log(res);
-            if(res == "success"){
-                FetchTasks(); // for re-rendering to see real time data
-            }
+            // console.log(res);
+            // if(res == "success"){
+            //     FetchTasks(); // for re-rendering to see real time data
+            // }
+            FetchTasks();
         }else{
             console.log("Something Wrong")
         }

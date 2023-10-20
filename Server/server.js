@@ -16,9 +16,13 @@ dotenv.config();
 import nodemailer from "nodemailer";
 
 const app = express();
+const allowOrigins = [
+  "http://localhost:5174",
+  "http://localhost:5173"
+];
 app.use(
   cors({
-    origin: "http://localhost:5173", // Allow requests from your frontend app
+    origin: allowOrigins, // Allow requests from your frontend app
     methods: ["PUT", "POST", "GET", "DELETE"], // Add any other methods you use
     credentials: true, // Allow cookies and credentials
   })
@@ -121,13 +125,17 @@ app.post("/login", (request, response) => {
 
   const que = "select * from users where email = ? and password = ?";
   con.query(que, [request.body.email, request.body.password], (err, result) => {
+    // console.log("yeap admin : action is  " , result[0].action)
+    const adminAction = result[0].action;
+
     if (err)
       return response.json({ Status: "Error", Error: "Error in server" });
 
     if (result.length > 0) {
       //jwt token creation..
 
-      const token = jwt.sign({ Role: "Admin" }, "key-id", { expiresIn: "1d" });
+      // const token = jwt.sign({ Role: "Admin" , Action : adminAction }, "key-id", { expiresIn: "1d" });
+      const token = jwt.sign({ Role: "Admin" , Action : adminAction }, "key-id", { expiresIn: "1d" });
 
       //..writing cookies and seding as a response..
       // response.cookie("token", token);
@@ -160,6 +168,7 @@ const verifyUser = (req, res, next) => {
 
       req.Status = "Successful";
       req.role = decoded.Role;
+      req.action = decoded.Action;
       req.id = decoded.id;
 
       // return res.json({Status : req.Status , Role : req.role})
@@ -175,8 +184,10 @@ app.get("/dashboard", verifyUser, (req, res) => {
   const result = req.Status;
   const id = req.id;
   const role = req.role;
+  const action = req.action;
 
-  return res.json({ Status: result, Id: id, Role: role });
+  // return res.json({ Status: result, Id: id, Role: role , Action : action });
+  return res.json({ Status: result, Id: id, Role: role , Action : action });
 });
 
 // const verifyUser = (req, res, next) => {

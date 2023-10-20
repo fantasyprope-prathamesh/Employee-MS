@@ -34,10 +34,12 @@ const AssignNewTask = () => {
           if (response.data.Role === "Employee") {
             console.log("Employee heresss employee");
             navigate("/start");
-          } else if (response.data.Role === "Admin") {
+          } else if (response.data.Role === "Admin" && response.data.Action === "Project Manager") {
             console.log("Admin here")
             const id = response.data.id;
             navigate("/assignnewtask");
+          }else if(response.data.Action != "Project Manager"){
+            navigate("/taskoverview")
           }
         } else if (response.data.Status == "Unsuccessful") {
           navigate("/start");

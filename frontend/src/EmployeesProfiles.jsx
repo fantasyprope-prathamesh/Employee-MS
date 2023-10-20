@@ -63,10 +63,10 @@ const EmployeesProfiles = () => {
     <>
       <div className="d-flex justify-content-center align-items-center vh-100 " >
       {/* style={{backgroundColor:"#d8d6f0"}} */}
-        <div className="d-flex justify-content-between px-4 py-4  width g-3 " style={{backgroundColor:"#80aaff",boxShadow:"3px 3px 4px 0px #000066"}}>
+        <div className="d-flex justify-content-between px-4 py-4  width g-3 " style={{backgroundColor:"#80aaff",boxShadow:"13px 13px 0px 0px orange"}}>
           <img
             src={"http://localhost:8081/images/" + employee.image}
-            style={{ width: "300px" }}
+            style={{ width: "300px" , maxHeight:"20rem" }}
             // className="rounded-image"
           ></img>
           <div className="d-flex flex-column p-4 color justify-content-center">
